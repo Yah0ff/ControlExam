@@ -1,0 +1,48 @@
+\documentclass[12pt,letterpaper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+\usepackage{multirow}
+\usepackage{relsize}
+\usepackage{placeins}
+\usepackage{enumitem}
+\usepackage{ragged2e}
+\usepackage{csquotes}
+\usepackage[spanish, english]{babel} % Cargar ambos idiomas
+\usepackage{siunitx}
+\usepackage{textcomp}
+
+\usepackage[T1]{fontenc} 
+\addbibresource{Referencias.bib}
+\renewcommand{\theequation}{\thesubsubsection.\arabic{equation}} 
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{xcolor}
+\newenvironment{Encuesta}{\begin{figure}[h]\centering}{\end{figure}}
+
+\renewcommand{\theequation}{\arabic{equation}}
+\setcounter{equation}{0}
+
+\begin{document}
+
+\begin{center}
+    \text{\large UNIVERSIDAD TECNOLÓGICA DE LA MIXTECA} \\
+    \text{INSTITUTO DE ELECTRÓNICA Y MECATRÓNICA} \\[0.5cm]
+    \text{\large Primer Examen Parcial de Control No Lineal} \\
+    \text{MEOSIA} \\[0.5cm]
+    \text{30 de septiembre de 2026} \\[0.5cm]
+\end{center} \par
+
+\textbf{Nombre:} Yahir Fernando García García     \hspace{5cm}    \textbf{Grupo:} MEOSIA3\par\vspace{0.1cm}
+\textbf{Instrucciones:} La solución del examen debe incluir las demostraciones solicitadas escritas a mano, junto con los códigos de MATLAB y las simulaciones que validen los resultados. Se verificará la originalidad del trabajo
+presentado.
+
+\input{Tarea}
+
+\end{document}

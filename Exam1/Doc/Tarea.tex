@@ -1,0 +1,204 @@
+\small
+\vspace{0.5cm}
+Considere el siguiente modelo de un PVTOL
+
+\begin{equation*}
+    \begin{aligned}
+        \ddot{x}&=-\frac{U}{m}sin(\theta)\\
+        \ddot{z}&=\frac{U}{m}cos(\theta)-g\\
+        \ddot{\theta}&=\frac{1}{J}\tau
+    \end{aligned}
+\end{equation*}
+
+Donde \(\theta\) es el ángulo de actitud. \({x}\) y \({z}\) representan las posiciones traslacionales, \(U\) es el empuje total generado por los motores, \(\tau\) es el par aplicado para controlar la actitud, \(m\) es la masa del vehiculo, \(J\) es el momento de inercia y \(g\) es la gravedad. Se usarán como parámetros \(m = 1\), \(J = 1\).
+
+\begin{enumerate}
+    \item Mediante linealización exacta por realimentación, realice el desacoplamiento de las dinámicas mediante entradas virtuales y obtenga el modelo que permita establecer un lazo de control externo para las posiciones (1 punto).
+\end{enumerate}
+
+Se define el vector de estados como el siguiente
+
+\begin{equation*}
+    X=\begin{bmatrix}
+        x_1\\x_2\\x_3\\x_4\\x_5\\x_6
+    \end{bmatrix}=\begin{bmatrix}
+        x\\\dot{x}\\z\\\dot{z}\\\theta\\\dot{\theta}
+    \end{bmatrix}
+\end{equation*}
+
+El sistema se escribe como
+
+\begin{equation*}
+    \dot{X}=f(X)+g_1(X)U+g_2(X)\tau
+\end{equation*}
+
+con:
+
+\begin{equation*}
+    f(X)=\begin{bmatrix}
+        x_2\\0\\x_4\\-g\\x_6\\0
+    \end{bmatrix},\quad g_1(X)=\begin{bmatrix}
+        0\\-sin(x_5)\\0\\cos(x_5)\\0\\0
+    \end{bmatrix},\quad g_2(X)=\begin{bmatrix}
+        0\\0\\0\\0\\0\\1
+    \end{bmatrix}
+\end{equation*}
+
+Se derivan las salidas hasta que aparezcan las entradas \(U\) y \(\tau\). Para la salida \(y_1=x_1\) se tiene que:
+
+\begin{equation*}
+    \begin{aligned}
+        \dot{y}_1&=x_2\\
+        \ddot{y}_1&=\dot{x}_2=-U sin(x_5)\\
+    \end{aligned}
+\end{equation*}
+
+Dado que aparece U en la segunda derivada, se tiene que el orden relativo de la salida \(y_1\) es 2. Para la salida \(y_2=x_3\) se tiene que:
+
+\begin{equation*}
+    \begin{aligned}
+        \dot{y}_2&=x_4\\
+        \ddot{y}_2&=\dot{x}_4=U cos(x_5)-g\\
+    \end{aligned}
+\end{equation*}
+
+Dado que aparece U en la segunda derivada, se tiene que el orden relativo de la salida \(y_2\) es 2. La suma de los grados relativos es 4, mientras que el orden del sistema es 6, por lo que se tiene un sistema no completamente linealizable. Las derivadas de las salidas se escriben como:
+
+\begin{equation*}
+    \begin{bmatrix}
+        \ddot{y}_1\\\ddot{y}_2
+    \end{bmatrix}=\begin{bmatrix}
+        -sin(x_5) & 0\\cos(x_5) & 0
+    \end{bmatrix}\begin{bmatrix}
+        U\\\tau
+    \end{bmatrix}+\begin{bmatrix}
+        0\\-g
+    \end{bmatrix}
+\end{equation*}
+
+por lo que la matriz de desacoplamiento seria:
+
+\begin{equation*}
+    A(X)=\begin{bmatrix}
+        -sin(x_5) & 0\\cos(x_5) & 0
+    \end{bmatrix}
+\end{equation*}
+
+Para desacoplar el sistemas, se definen las siguientes entradas virtuales:
+
+\begin{equation*}
+    v_x\to \ddot{x}, \quad v_z\to \ddot{z}
+\end{equation*}
+
+Sustituyendo en las expresiones del modelo tenemos que:
+
+\begin{equation*}
+    \begin{aligned}
+        v_x&=-U sin(\theta)\\
+        v_z&=U cos(\theta)-g
+    \end{aligned}
+\end{equation*}
+
+sumando ambos terminos y despejando \(U\) se obtiene que:
+
+\begin{equation*}
+    \begin{aligned}
+        v_x^2+(v_z+g)^2&=U^2 sin^2(\theta)+U^2 cos^2(\theta)\\
+        U&=\sqrt{v_x^2+(v_z+g)^2}\\
+    \end{aligned}
+\end{equation*}
+
+Dividiendo la primera ecuacion entre la segunda
+
+\begin{equation*}
+    \begin{aligned}
+        \frac{v_x}{v_z+g}&=\frac{-U sin(\theta)}{U cos(\theta)}=-tan(\theta)\\
+        \theta_d&=atan\left(-\frac{v_x}{v_z+g}\right)\\
+    \end{aligned}
+\end{equation*}
+
+La dinámica de la actitud es:
+
+\begin{equation*}
+    \ddot{\theta}=\frac{1}{J}\tau
+\end{equation*}
+
+Entonces se define el error de actitud como \(e_\theta=\theta-\theta_d\), derivando dos veces se obtiene que:
+
+\begin{equation*}
+    \begin{aligned}
+        \dot{e}_\theta&=\dot{\theta}-\dot{\theta}_d\\
+        \ddot{e}_\theta&=\ddot{\theta}-\ddot{\theta}_d\\
+        \ddot{e}_\theta&=\frac{1}{J}\tau-\ddot{\theta}_d\\
+    \end{aligned}
+\end{equation*}
+
+Entonces se elige la ley de control para la actitud como:
+
+\begin{equation*}
+    \tau=J(\ddot{\theta}_d-k_1\dot{e}_\theta-k_2 e_\theta)
+\end{equation*}
+
+Sustituyendo \(\theta=\theta_d\) en las ecuaciones de translación, se obtiene el modelo desacoplado para el lazo externo:
+
+\begin{equation*}
+    \begin{aligned}
+        \ddot{x}&=-U sin(\theta)\\
+        \ddot{z}&=U cos(\theta)-g\\
+    \end{aligned}
+\end{equation*}
+
+Por lo tanto, el modelo desacoplado es:
+
+\begin{equation*}
+    \begin{aligned}
+        \ddot{x}&=v_x\\
+        \ddot{z}&=v_z\\
+    \end{aligned}
+\end{equation*}
+
+Con ello, el lazo externo queda definido por las siguientes ecuaciones:
+
+\begin{equation*}
+    \begin{aligned}
+        U=\sqrt{v_x^2+(v_z+g)^2}\\
+        \theta_d=atan\left(-\frac{v_x}{v_z+g}\right)\\
+        \tau=J(\ddot{\theta}_d-k_1\dot{e}_\theta-k_2 e_\theta)\\
+    \end{aligned}
+\end{equation*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{enumerate}
+    \item Para el sistema obtenido mediante el procedimiento anterior, diseñe e implemente los siguientes controladores para
+el seguimiento de trayectorias en x y z:
+    \begin{itemize}
+        \item Realimentación de estados usando LMI (1 punto)
+        
+
+
+
+
+
+
+
+
+
+
+
+        \item Modos deslizantes (2 puntos)
+
+
+    \end{itemize}
+\end{enumerate}
