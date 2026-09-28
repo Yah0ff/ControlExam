@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 0 "main.bcf" "main.bbl" "main" 1790303550.3449 0
+["biber main"] 0 "main.bcf" "main.bbl" "main" 1790533717.60083 0
   "Referencias.bib" 0 -1 0 ""
   "main.bcf" 0 -1 0 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1790303545.50878 "d:/Documentos/GitHub/ControlExam/Exam1/Doc/main.tex" "main.pdf" "main" 1790303550.34695 0
+["pdflatex"] 1790533712.85472 "d:/Documentos/GitHub/ControlExam/Exam1/Doc/main.tex" "main.pdf" "main" 1790533717.60432 0
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecbx1200.tfm" 993061958 3200 b8d69bc738e5ef3e08cefeef3109ff56 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecrm1095.tfm" 993062124 3172 eb6efaa83c6c52473a1c403f376eab0f ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecrm1200.tfm" 993062126 3152 4850ff0163852b7fab34bd55e1197f28 ""
@@ -35,6 +35,7 @@
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1247596667 35752 024fb6c41858982481f6968b5fc26508 ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1247596667 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1247596667 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "C:/Program Files/MiKTeX/tex/context/base/mkii/supp-pdf.mkii" 1580390158 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "C:/Program Files/MiKTeX/tex/generic/babel/babel.sty" 1765441417 146654 eaac99efd6386094bb8a3980e34ec87b ""
   "C:/Program Files/MiKTeX/tex/generic/babel/locale/en/babel-en.ini" 1765441420 3936 fef897bbcfe8e9d18c93a3d2d53cf9d8 ""
@@ -142,12 +143,12 @@
   "C:/Users/Yahoff/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1440.pk" 1790294292 34320 5ed84a83144794c136fe67ac146e37f8 ""
   "C:/Users/Yahoff/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk" 1790295140 12668 90114d35eb222a4beedf11726998d31c ""
   "C:/Users/Yahoff/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774472658 13323464 ab2f780685bba33b951e8f20f009a6d2 ""
-  "Tarea.tex" 1790303543 5321 48c683ff68f75543d19f3d88acb8fb91 ""
+  "Tarea.tex" 1790533711 7119 27882a7b5de16e272cb65a93ca1ac5a9 ""
   "d:/Documentos/GitHub/ControlExam/Exam1/Doc/main.tex" 1790294835 1562 16978a0517ee081c52073ddbdd0bbc89 ""
-  "main.aux" 1790303548 456 9638ba182c78f5e9b56b8c639c164ecf "pdflatex"
+  "main.aux" 1790533716 456 3e995432416d2dc74c4ddd013b03a1c3 "pdflatex"
   "main.bbl" 0 -1 0 "biber main"
-  "main.out" 1790303548 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "main.run.xml" 1790303548 2434 686b91026855520453bf84011460d5df "pdflatex"
+  "main.out" 1790533716 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "main.run.xml" 1790533716 2434 686b91026855520453bf84011460d5df "pdflatex"
   "main.tex" 1790294835 1562 16978a0517ee081c52073ddbdd0bbc89 ""
   (generated)
   "main.aux"
