@@ -184,8 +184,74 @@ Con ello, el lazo externo queda definido por las siguientes ecuaciones:
     \item Para el sistema obtenido mediante el procedimiento anterior, diseñe e implemente los siguientes controladores para
 el seguimiento de trayectorias en x y z:
     \begin{itemize}
-        \item Realimentación de estados usando LMI (1 punto)
+        \item Realimentación de estados usando LMI (1 punto)\\
         
+        Del punto 1, el desacoplamiento por linealización es:
+
+        \begin{equation*}
+            \ddot{x}=v_x,\quad \ddot{z}=v_z \quad \ddot{\theta}=\tau
+        \end{equation*}
+        
+        Cada uno es un doble integrador. En espacio de estados se puede escribir como:
+
+        \begin{equation*}
+            \dot{x}_p=Ax_p+Bu_p
+        \end{equation*}
+
+        donde:
+
+        \begin{equation*}
+            A=\begin{bmatrix}
+                0 & 1\\
+                0 & 0
+            \end{bmatrix},\quad B=\begin{bmatrix}
+                0\\
+                1
+            \end{bmatrix}
+        \end{equation*}
+
+        Se propone la siguiente ley de control:
+
+        \begin{equation*}
+            u_p=-Kx_p
+        \end{equation*}
+
+        donde \(K=[k1\quad k2]\). Cerrando el lazo, se tiene que:
+
+        \begin{equation*}
+            \dot{x}_p=(A-BK)x_p
+        \end{equation*}
+
+        Para esto, se propone la siguiente función candidata de Lyapunov:
+
+        \begin{equation*}
+            V(x_p)=x_p^TPx_p
+        \end{equation*}
+
+        Derivando y sustituyendo, se obtiene que:
+
+        \begin{equation*}
+            \begin{aligned}
+                \dot{V}(x_p)=&\dot{x}_p^TPx_p+x_p^TP\dot{x}_p\\
+                =&x_p^T(A-BK)^TPx_p+x_p^TP(A-BK)x_p\\
+                =&x_p^T[(A-BK)^TP+P(A-BK)]x_p
+            \end{aligned}
+        \end{equation*}
+
+        Para que el sistema sea estable, se requiere que \(\dot{V}(x_p)<0\), por lo que se tiene que:
+
+        \begin{equation*}
+            (A-BK)^TP+P(A-BK)<0
+        \end{equation*}
+
+        Dado que hay productos entre \(P\) y \(K\), se realiza el cambio de variable:
+
+        \begin{equation*}
+            \begin{aligned}
+                F&=KP^{-1}\\
+                K&=FP
+            \end{aligned}
+        \end{equation*}
 
 
 
