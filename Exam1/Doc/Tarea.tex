@@ -253,8 +253,60 @@ el seguimiento de trayectorias en x y z:
             \end{aligned}
         \end{equation*}
 
+        Sustituyendo en la ecuación de estabilidad, se obtiene que:
 
+        \begin{equation*}
+            (A-BFP)^TP+P(A-BFP)<0
+        \end{equation*}   
 
+        sustituyendo
+
+        \begin{equation*}
+            \begin{aligned}
+                A-BK=A-BFP\\
+            \end{aligned}
+        \end{equation*}
+
+        Expandiendo
+
+        \begin{equation*}
+            \begin{aligned}
+                (A-BFP)^TP+P(A-BFP)=A^TP+PA-P^TF^TB^TP-PBFP\\
+            \end{aligned}
+        \end{equation*}
+
+        Dado que \(P\) es simétrica, se tiene que \(P^T=P\), por lo que:
+
+        \begin{equation*}
+            A^TP+PA-P^TF^TB^TP-PBFP=A^TP+PA-P(F^TB^T+BF)P\\
+        \end{equation*}
+
+        Haciendo el siguiente cambio de variable:
+
+        \begin{equation*}
+            \gamma=P^{-1},\quad F=K\gamma
+        \end{equation*}
+
+        Multiplicando por \(\gamma\) a la izquierda y derecha, se obtiene que:
+
+        \begin{equation*}
+            \begin{aligned}
+                \gamma[A^TP+PA-P(F^TB^T+BF)P]\gamma<0\\
+                \gamma A^TP\gamma+\gamma PA\gamma-\gamma P(F^TB^T+BF)P\gamma<0\\
+            \end{aligned}
+        \end{equation*}
+
+        Dado que \(\gamma P = I\) y \(P\gamma = I\), se tiene que:
+
+        \begin{equation*}
+            \gamma A^T + A\gamma - (F^TB^T + BF) < 0
+        \end{equation*}
+
+        Dado que es necesario asegurarse que el contrador de \(\tau\) sea más rapido, se agrega un término de amortiguamiento, por lo que la ecuación final es:
+
+        \begin{equation*}
+            \gamma A^T + A\gamma - (F^TB^T + BF) + \alpha\gamma < 0
+        \end{equation*}
 
 
 
