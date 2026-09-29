@@ -1,0 +1,28 @@
+# Simulink
+slprj/
+*.slxc
+*.autosave
+
+# MATLAB
+*.asv
+*.m~
+*.autosave
+
+# Código generado
+*_grt_rtw/
+*_ert_rtw/
+*_slrt_rtw/
+codegen/
+
+# Archivos temporales
+*.tmp
+*.log
+*.bak
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
