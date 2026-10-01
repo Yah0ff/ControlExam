@@ -558,5 +558,118 @@ el seguimiento de trayectorias en x y z:
 
        \item \textbf{Modos deslizantes asintóticos} (2 puntos) \\
 
+        Se introduce la superficie de deslizamiento:
+        \begin{equation*}
+            \sigma = \dot{X}_1 + m X_1 = X_2 + m X_1,\qquad m>0
+        \end{equation*}
+        y la superficie auxiliar:
+        \begin{equation*}
+            S = \dot{\sigma} + m_s \sigma,\qquad m_s>0
+        \end{equation*}
+
+        Derivando la superficie auxiliar:
+        \begin{equation*}
+            \dot{S} = \ddot{\sigma} + m_s\dot{\sigma}
+        \end{equation*}
+        donde:
+        \begin{equation*}
+            \begin{aligned}
+                \dot{\sigma} &= \dot{X}_2 + m\dot{X}_1 = f(X,t) + u + mX_2 \\
+                \ddot{\sigma} &= \dot{f}(X,t) + \dot{u} + m\dot{X}_2 = \dot{f}(X,t) + \dot{u} + m[f(X,t) + u]
+            \end{aligned}
+        \end{equation*}
+
+        Sustituyendo en $\dot{S}$:
+        \begin{equation*}
+            \dot{S} = \dot{f}(X,t) + \dot{u} + (m + m_s)[f(X,t) + u] + m\,m_s X_2
+        \end{equation*}
+
+        Se propone la función candidata de Lyapunov:
+        \begin{equation*}
+            V = \frac{1}{2}S^2
+        \end{equation*}
+        cuya derivada es:
+        \begin{equation*}
+            \dot{V} = S\dot{S} = S\left[\dot{u} + m\,m_s X_2 + (m+m_s)u + (m+m_s)f(X,t) + \dot{f}(X,t)\right]
+        \end{equation*}
+
+        Se propone el controlador dinámico:
+        \begin{equation*}
+            \dot{u} = -m\,m_s X_2 - (m+m_s)u + V_1
+        \end{equation*}
+        con $V_1$ un control virtual. Sustituyendo:
+        \begin{equation*}
+            \begin{aligned}
+                \dot{V} &= S\left[V_1 + (m+m_s)f(X,t) + \dot{f}(X,t)\right] \\
+                &\le S V_1 + \left[L_d + (m+m_s)L\right]|S|
+            \end{aligned}
+        \end{equation*}
+
+        Eligiendo el control virtual como:
+        \begin{equation*}
+            V_1 = -K\,\operatorname{sign}(S)
+        \end{equation*}
+        se obtiene:
+        \begin{equation*}
+            \begin{aligned}
+                \dot{V} &\le -K S\operatorname{sign}(S) + \left[L_d + (m+m_s)L\right]|S| \\
+                &\le -K|S| + \left[L_d + (m+m_s)L\right]|S| \\
+                &\le -\left[K - L_d - (m+m_s)L\right]|S|
+            \end{aligned}
+        \end{equation*}
+
+        Si se cumple la condición:
+        \begin{equation*}
+            K > L_d + (m+m_s)L
+        \end{equation*}
+
+        Finalmente, el controlador dinámico resultante es:
+        \begin{equation*}
+            \begin{aligned}
+                \sigma &= X_2 + m X_1 \\
+                S &= \dot{\sigma} + m_s\sigma \\
+                \dot{u} &= -m\,m_s X_2 - (m+m_s)u - K\,\operatorname{sign}(S)
+            \end{aligned}
+        \end{equation*}
+
+        Aplicando el resultado a cada eje del modelo desacoplado:
+        \begin{equation*}
+            \begin{aligned}
+                \sigma_x &= \dot{e}_x + n\,e_x, & S_x &= \dot{\sigma}_x + n\,\sigma_x \\
+                \sigma_z &= \dot{e}_z + n\,e_z, & S_z &= \dot{\sigma}_z + n\,\sigma_z
+            \end{aligned}
+        \end{equation*}
+        con las leyes dinámicas:
+        \begin{equation*}
+            \begin{aligned}
+                \dot{v}_x &= -n^2\dot{x} - 2n\,v_x - k\,\operatorname{sign}(S_x) \\
+                \dot{v}_z &= -n^2\dot{z} - 2n\,v_z - k\,\operatorname{sign}(S_z)
+            \end{aligned}
+        \end{equation*}
+
+        De manera análoga al lazo externo, la dinámica de la actitud es:
+        \begin{equation*}
+            \ddot{\theta} = \frac{1}{J}\tau
+        \end{equation*}
+        con $\theta_d$ la referencia generada por el lazo externo. Definiendo el error de actitud $e_\theta = \theta - \theta_d$, se proponen las superficies:
+        \begin{equation*}
+            \begin{aligned}
+                \sigma_\theta &= \dot{e}_\theta + b\,e_\theta \\
+                S_\theta &= \dot{\sigma}_\theta + d\,\sigma_\theta
+            \end{aligned}
+        \end{equation*}
+        con $b, d > 0$. La ley de control dinámica es:
+        \begin{equation*}
+            \dot{\tau} = -b\,d\,\dot{\theta} - (b+d)\tau - j\,\operatorname{sign}(S_\theta)
+        \end{equation*}
+
+        Siguiendo el mismo procedimiento que en el lazo externo, la derivada de la función de Lyapunov $V_\theta = \tfrac{1}{2}S_\theta^2$ satisface:
+        \begin{equation*}
+            \dot{V}_\theta \le -\left[j - L_d - (b+d)L\right]|S_\theta|
+        \end{equation*}
+        por lo que si $j > L_d + (b+d)L$, el error de actitud $e_\theta\to 0$ y en consecuencia $\theta\to\theta_d$.
+
+        
+
     \end{itemize}
 \end{enumerate}
