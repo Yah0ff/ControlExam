@@ -184,7 +184,7 @@ Con ello, el lazo externo queda definido por las siguientes ecuaciones:
     \item Para el sistema obtenido mediante el procedimiento anterior, diseñe e implemente los siguientes controladores para
 el seguimiento de trayectorias en x y z:
     \begin{itemize}
-        \item Realimentación de estados usando LMI (1 punto)\\
+        \item \textbf{Realimentación de estados usando LMI} (1 punto)\\
         
         Del punto 1, el desacoplamiento por linealización es:
 
@@ -315,7 +315,130 @@ el seguimiento de trayectorias en x y z:
 
 
 
-        \item Modos deslizantes (2 puntos)
+        \item \textbf{Modos deslizantes} (2 puntos)\\
+
+        Cada eje del modelo desacoplado se escribe como un sistema de segundo orden de la forma:
+
+        \begin{equation*}
+            \begin{aligned}
+                \dot{X}_1 &= X_2 \\
+                \dot{X}_2 &= f(X,t)+v
+            \end{aligned}
+        \end{equation*}
+
+        Se desea que la salida $y=X_1$ siga una señal de referencia $r(t)$. Se define el error de seguimiento como:
+
+        \begin{equation*}
+            e = r-y = r-X_1
+        \end{equation*}
+
+        de modo que:
+
+        \begin{equation*}
+            \dot{e}=\dot{r}-X_2
+        \end{equation*}
+
+        Se propone la superficie de deslizamiento como una ecuación diferencial estable de primer orden:
+        \begin{equation*}
+            \sigma=\dot{e}+m\,e,\qquad m>0
+        \end{equation*}
+
+        Si $\sigma=0$, entonces $\dot{e}+m e=0$. Se propone la función candidata de Lyapunov:
+
+        \begin{equation*}
+            V=\frac{1}{2}\sigma^2
+        \end{equation*}
+
+        Derivando y sustituyendo las expresiones del error:
+
+        \begin{equation*}
+            \begin{aligned}
+                \dot{\sigma} &= \ddot{e}+m\dot{e} \\
+                &= \ddot{r}-f(X,t)-v+m(\dot{r}-X_2) \\
+                &= m\dot{r}+\ddot{r}-mX_2-f(X,t)-v
+            \end{aligned}
+        \end{equation*}
+
+        Considerando que las derivadas de la referencia y la dinámica no lineal están acotadas:
+        \begin{equation*}
+            |m\dot{r}+\ddot{r}|\le R,\qquad |f(X,t)|\le L
+        \end{equation*}
+        se tiene que:
+        \begin{equation*}
+            \dot{V}=\sigma\dot{\sigma}\le\sigma\left[R+L-mX_2-v\right]
+        \end{equation*}
+
+        Se elige la ley de control:
+        \begin{equation*}
+            v=-mX_2+K\operatorname{sign}(\sigma),\qquad K>0
+        \end{equation*}
+
+        Sustituyendo:
+        \begin{equation*}
+            \begin{aligned}
+                \dot{V} &\le \sigma\left[R+L-mX_2+mX_2-K\operatorname{sign}(\sigma)\right] \\
+                &\le (R+L)|\sigma|-K|\sigma| \\
+                &\le -(K-R-L)|\sigma|
+            \end{aligned}
+        \end{equation*}
+
+        Si $K>R+L$, entonces $\dot{V}<0$ para todo $\sigma\neq 0$, y el error de seguimiento es asintóticamente estable, es decir, $e\to 0$ conforme $t\to\infty$. Aplicando el resultado a cada eje, se obtiene:
+
+        \begin{equation*}
+            \begin{aligned}
+                \sigma_x &= \dot{e}_x+n\,e_x, & v_x &= -n\dot{x}+l\operatorname{sign}(\sigma_x) \\
+                \sigma_z &= \dot{e}_z+m\,e_z, & v_z &= -m\dot{z}+k\operatorname{sign}(\sigma_z)
+            \end{aligned}
+        \end{equation*}
+        con $n,m>0$ y $l,k>R+L$.
+
+        La dinámica de la actitud es:
+        \begin{equation*}
+            \ddot{\theta}=\frac{1}{J}\tau
+        \end{equation*}
+        donde $\theta_d$ es la referencia generada por el lazo externo. Se define el error de actitud:
+        \begin{equation*}
+            e_\theta = \theta-\theta_d
+        \end{equation*}
+        y la superficie de deslizamiento:
+        \begin{equation*}
+            \sigma_\theta = \dot{e}_\theta + b\,e_\theta,\qquad b>0
+        \end{equation*}
+
+        Se propone la función candidata de Lyapunov:
+        \begin{equation*}
+            V_\theta=\frac{1}{2}\sigma_\theta^2
+        \end{equation*}
+        cuya derivada es:
+        \begin{equation*}
+            \dot{V}_\theta = \sigma_\theta\dot{\sigma}_\theta
+        \end{equation*}
+        Derivando la superficie:
+        \begin{equation*}
+            \dot{\sigma}_\theta = \ddot{e}_\theta+b\dot{e}_\theta = \ddot{\theta}-\ddot{\theta}_d+b(\dot{\theta}-\dot{\theta}_d)
+        \end{equation*}
+        Sustituyendo la dinámica de actitud y eligiendo la ley de control:
+        \begin{equation*}
+            \tau = -b\dot{\theta}-j\operatorname{sign}(\sigma_\theta),\qquad j>0
+        \end{equation*}
+        se obtiene:
+        \begin{equation*}
+            \begin{aligned}
+                \dot{\sigma}_\theta &= \frac{1}{J}\left(-b\dot{\theta}-j\operatorname{sign}(\sigma_\theta)\right)-\ddot{\theta}_d+b\dot{\theta}-b\dot{\theta}_d \\
+                &= -\frac{j}{J}\operatorname{sign}(\sigma_\theta)-\left(\ddot{\theta}_d+b\dot{\theta}_d\right)
+            \end{aligned}
+        \end{equation*}
+        y por lo tanto:
+        \begin{equation*}
+            \dot{V}_\theta \le -\frac{j}{J}|\sigma_\theta|+\left|\ddot{\theta}_d+b\dot{\theta}_d\right||\sigma_\theta|
+        \end{equation*}
+        Considerando que $|\ddot{\theta}_d+b\dot{\theta}_d|\le L_\theta$, se tiene:
+        \begin{equation*}
+            \dot{V}_\theta \le -\frac{1}{J}\left(j-JL_\theta\right)|\sigma_\theta|
+        \end{equation*}
+        Si $j>J L_\theta$, entonces $\dot{V}_\theta<0$, la superficie $\sigma_\theta\to 0$ en tiempo finito, y en consecuencia $e_\theta\to 0$ y $\dot{e}_\theta\to 0$, es decir, $\theta\to\theta_d$ y $\dot{\theta}\to\dot{\theta}_d$.
+
+        
 
 
     \end{itemize}
