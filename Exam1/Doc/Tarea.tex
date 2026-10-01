@@ -438,8 +438,125 @@ el seguimiento de trayectorias en x y z:
         \end{equation*}
         Si $j>J L_\theta$, entonces $\dot{V}_\theta<0$, la superficie $\sigma_\theta\to 0$ en tiempo finito, y en consecuencia $e_\theta\to 0$ y $\dot{e}_\theta\to 0$, es decir, $\theta\to\theta_d$ y $\dot{\theta}\to\dot{\theta}_d$.
 
-        
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        \item \textbf{Modos deslizantes con atenuación de chattering (spong/vydiasagar)} (2 puntos)\\
+
+        Con el fin de atenuar el chattering presente en el control por modos deslizantes clásico, se propone una superficie de deslizamiento con acción integral de la forma:
+        \begin{equation*}
+            \sigma = \dot{e} + m e + m \int e \, dt,\qquad m>0
+        \end{equation*}
+
+        Derivando la superficie respecto:
+        \begin{equation*}
+            \begin{aligned}
+                \dot{\sigma} &= \ddot{e} + m\dot{e} + m e \\
+                &= \ddot{r} - \ddot{y} + m\dot{e} + m e \\
+                &= \ddot{r} - f(X,t) - v + m\dot{e} + m e
+            \end{aligned}
+        \end{equation*}
+
+        Se propone la función candidata de Lyapunov:
+        \begin{equation*}
+            V = \frac{1}{2}\sigma^2
+        \end{equation*}
+        cuya derivada es:
+        \begin{equation*}
+            \dot{V} = \sigma\dot{\sigma} = \sigma\left[\ddot{r} - f(X,t) - v + m\dot{e} + m e\right]
+        \end{equation*}
+
+        Considerando que $|\ddot{r}|\le R$ y $|f(X,t)|\le L$, se obtiene la cota:
+        \begin{equation*}
+            \dot{V}\le \left(R+L+m|\dot{e}|+m|e|\right)|\sigma|-\sigma v
+        \end{equation*}
+
+        Se define la función de conmutación:
+        \begin{equation*}
+            V_{eq} = L + m|X_2| + m|e|
+        \end{equation*}
+        y se propone la ley de control:
+        \begin{equation*}
+            v = K\,V_{eq}\,\operatorname{sign}(\sigma),\qquad K>0
+        \end{equation*}
+
+        Sustituyendo en la derivada de la función de Lyapunov:
+        \begin{equation*}
+            \begin{aligned}
+                \dot{V} &\le (L+m|X_2|+m|e|)|\sigma| - K\,V_{eq}\,|\sigma| \\
+                &= V_{eq}|\sigma| - K\,V_{eq}|\sigma| \\
+                &= -(K-1)V_{eq}|\sigma|
+            \end{aligned}
+        \end{equation*}
+
+        Si $K>1$, entonces $\dot{V}<0$ para todo $\sigma\neq 0$, y el sistema es asintóticamente estable con $e\to 0$ conforme $t\to\infty$. La ley de control obtenida con $\operatorname{sign}(\sigma)$ presenta chattering por la discontinuidad en $\sigma=0$. Para atenuarlo, se sustituye la función $\operatorname{sign}(\sigma)$ por una saturación:
+        \begin{equation*}
+            \operatorname{sat}(\sigma) = \begin{cases}
+                +1, & \sigma > \phi \\
+                \sigma/\phi, & |\sigma|\le \phi \\
+                -1, & \sigma < -\phi
+            \end{cases}
+        \end{equation*}
+        con $\phi>0$ el ancho de la capa límite. La ley de control resultante es:
+        \begin{equation*}
+            v = K\,V_{eq}\,\operatorname{sat}(\sigma)
+        \end{equation*}
+
+        Aplicando el resultado a cada eje del modelo desacoplado:
+        \begin{equation*}
+            \begin{aligned}
+                \sigma_x &= \dot{e}_x + n\,e_x + n\int e_x\,dt, & v_x &= k\,V_{ex}\,\operatorname{sat}(\sigma_x) \\
+                \sigma_z &= \dot{e}_z + n\,e_z + n\int e_z\,dt, & v_z &= k\,V_{ez}\,\operatorname{sat}(\sigma_z)
+            \end{aligned}
+        \end{equation*}
+        con:
+        \begin{equation*}
+            \begin{aligned}
+                V_{ex} &= l + n|\dot{x}| + n|e_x| \\
+                V_{ez} &= l + n|\dot{z}| + n|e_z|
+            \end{aligned}
+        \end{equation*}
+
+        La dinámica de la actitud es:
+        \begin{equation*}
+            \ddot{\theta} = \frac{1}{J}\tau
+        \end{equation*}
+        con $\theta_d$ la referencia generada por el lazo externo. Se define el error de actitud como $e_\theta = \theta-\theta_d$ y, siguiendo la misma estrategia de atenuación de chattering, se propone la superficie:
+        \begin{equation*}
+            \sigma_\theta = \dot{e}_\theta + n_a e_\theta + n_a \int e_\theta\,dt,\qquad n_a>0
+        \end{equation*}
+
+        Se define la función de conmutación:
+        \begin{equation*}
+            V_{e\theta} = L_a + n_a|\dot{\theta}| + n_a|e_\theta|
+        \end{equation*}
+        con $L_a>0$ una cota positiva de la perturbación en el lazo de actitud. La ley de control es:
+        \begin{equation*}
+            \tau = K_a\,V_{e\theta}\,\operatorname{sat}(\sigma_\theta)
+        \end{equation*}
+
+        Siguiendo el mismo procedimiento que en el lazo externo, la derivada de la función de Lyapunov $V_\theta = \tfrac{1}{2}\sigma_\theta^2$ satisface:
+        \begin{equation*}
+            \dot{V}_\theta \le -(K_a-1)V_{e\theta}|\sigma_\theta|
+        \end{equation*}
+        por lo que si $K_a>1$, el error de actitud $e_\theta\to 0$ y en consecuencia $\theta\to\theta_d$.
+
+       \item \textbf{Modos deslizantes asintóticos} (2 puntos) \\
 
     \end{itemize}
 \end{enumerate}

@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 0 "main.bcf" "main.bbl" "main" 1790840039.31823 0
+["biber main"] 0 "main.bcf" "main.bbl" "main" 1790841400.32275 0
   "Referencias.bib" 0 -1 0 ""
   "main.bcf" 0 -1 0 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1790840035.48922 "d:/Documentos/GitHub/ControlExam/Exam1/Doc/main.tex" "main.pdf" "main" 1790840039.32036 0
+["pdflatex"] 1790841396.52733 "d:/Documentos/GitHub/ControlExam/Exam1/Doc/main.tex" "main.pdf" "main" 1790841400.3248 0
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecbx1095.tfm" 993061956 3228 aacd2ac2d814480e4422ad7e830fd2d4 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecbx1200.tfm" 993061958 3200 b8d69bc738e5ef3e08cefeef3109ff56 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecrm1095.tfm" 993062124 3172 eb6efaa83c6c52473a1c403f376eab0f ""
@@ -145,12 +145,12 @@
   "C:/Users/Yahoff/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1440.pk" 1790294292 34320 5ed84a83144794c136fe67ac146e37f8 ""
   "C:/Users/Yahoff/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk" 1790295140 12668 90114d35eb222a4beedf11726998d31c ""
   "C:/Users/Yahoff/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774472658 13323464 ab2f780685bba33b951e8f20f009a6d2 ""
-  "Tarea.tex" 1790840029 14068 9b851e94d67c630b34405473e8023c2c ""
+  "Tarea.tex" 1790841394 18822 98ef90789630eb9dac11f19272e75526 ""
   "d:/Documentos/GitHub/ControlExam/Exam1/Doc/main.tex" 1790294835 1562 16978a0517ee081c52073ddbdd0bbc89 ""
-  "main.aux" 1790840038 456 d02d78e66f28ca53905da26f7e6359a5 "pdflatex"
+  "main.aux" 1790841399 456 c9134714e8b24f6f9c864dea9e72697b "pdflatex"
   "main.bbl" 0 -1 0 "biber main"
-  "main.out" 1790840038 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "main.run.xml" 1790840038 2434 686b91026855520453bf84011460d5df "pdflatex"
+  "main.out" 1790841398 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "main.run.xml" 1790841399 2434 686b91026855520453bf84011460d5df "pdflatex"
   "main.tex" 1790294835 1562 16978a0517ee081c52073ddbdd0bbc89 ""
   (generated)
   "main.aux"
