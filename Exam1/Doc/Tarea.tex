@@ -667,9 +667,67 @@ el seguimiento de trayectorias en x y z:
         \begin{equation*}
             \dot{V}_\theta \le -\left[j - L_d - (b+d)L\right]|S_\theta|
         \end{equation*}
-        por lo que si $j > L_d + (b+d)L$, el error de actitud $e_\theta\to 0$ y en consecuencia $\theta\to\theta_d$.
+        por lo que si $j > L_d + (b+d)L$, el error de actitud $e_\theta\to 0$ y en consecuencia $\theta\to\theta_d$.\\
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        \item \textbf{Pseudo modo deslizante} (2 puntos)\\
+
+        Sea $\sigma$ la superficie de deslizamiento. Se define la función de saturación:
+        \begin{equation*}
+            \operatorname{sat}\!\left(\frac{\sigma}{\phi}\right) = \begin{cases}
+                +1, & \sigma > \phi \\[2pt]
+                \dfrac{\sigma}{\phi}, & |\sigma| \le \phi \\[2pt]
+                -1, & \sigma < -\phi
+            \end{cases}
+        \end{equation*}
+        con $\phi>0$ el ancho de la capa límite. Fuera de ella ($|\sigma|>\phi$) la función coincide con $\operatorname{sign}(\sigma)$, por lo que la ley de control recupera la estructura del SMC clásico. Dentro de la capa límite, la ley es lineal en $\sigma$ y por lo tanto continua, lo que suaviza la señal de control.\\
+
+        Sustituyendo $\operatorname{sign}(\sigma)$ por $\operatorname{sat}(\sigma/\phi)$ en la ley de control del lazo externo, se obtiene:
+        \begin{equation*}
+            v_x = -n\dot{x} + K\,\operatorname{sat}\!\left(\frac{\sigma_x}{\phi}\right),\qquad
+            v_z = -n\dot{z} + K\,\operatorname{sat}\!\left(\frac{\sigma_z}{\phi}\right)
+        \end{equation*}
+
+        De igual manera, para el lazo interno:
+        \begin{equation*}
+            \tau = -b\dot{\theta} + j\,\operatorname{sat}\!\left(\frac{\sigma_\theta}{\phi}\right)
+        \end{equation*}
+
+        Considérese el lazo externo con la superficie:
+        \begin{equation*}
+            \sigma = \dot{e} + n e,\qquad e = r - y
+        \end{equation*}
+        y la función candidata de Lyapunov:
+        \begin{equation*}
+            V = \frac{1}{2}\sigma^2
+        \end{equation*}
+        Derivando y sustituyendo la ley de control con pseudomodo deslizante:
+        \begin{equation*}
+            \dot{V} = \sigma\dot{\sigma} \le (R+L)|\sigma| - K\sigma\,\operatorname{sat}\!\left(\frac{\sigma}{\phi}\right)
+        \end{equation*}
+
+        Si se encuentra fuera del limite ($|\sigma|>\phi$), entonces $\operatorname{sat}(\sigma/\phi)=\operatorname{sign}(\sigma)$, y por lo tanto:
+        \begin{equation*}
+            \dot{V} \le (R+L)|\sigma| - K|\sigma| = -(K-R-L)|\sigma|
+        \end{equation*}
+        Si $K>R+L$, entonces $\dot{V}<0$ y la superficie converge hacia la capa límite en tiempo finito. Pero si se encuentra dentro del limite ($|\sigma|\le \phi$).  Entonces $\operatorname{sat}(\sigma/\phi)=\sigma/\phi$, y por lo tanto:
+        \begin{equation*}
+            \dot{V} \le (R+L)|\sigma| - \frac{K}{\phi}\sigma^2
+        \end{equation*}
+        El término cuadrático domina cuando $|\sigma|$ es suficientemente grande dentro de la capa, garantizando $\dot{V}<0$.  
         
-
     \end{itemize}
 \end{enumerate}
