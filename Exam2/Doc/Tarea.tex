@@ -1,0 +1,206 @@
+\small
+\vspace{0.5cm}
+
+1.- Dado el sistema no lineal SISO
+
+\begin{equation*}
+    \begin{aligned}
+        \dot{x}&= Ax+f(x,t)+Bu \\
+        y&= Cx
+    \end{aligned}
+\end{equation*}
+
+donde
+
+\begin{equation*}
+    A = \begin{bmatrix}
+        0 & 1 & 0 & \cdots & 0 \\
+        0 & 0 & 1 & \cdots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & 0 & \cdots & 1 \\
+        0 & 0 & 0 & \cdots & 0
+    \end{bmatrix}, \qquad
+    B = \begin{bmatrix}
+        0 \\
+        0 \\
+        \vdots \\
+                0 \\
+        1
+    \end{bmatrix}, \qquad
+    C = \begin{bmatrix}
+        1 & 0  & \cdots & 0 & 0
+    \end{bmatrix}, \qquad
+    f(x,t) = \begin{bmatrix}
+        f_1(x,t) \\
+        f_2(x,t) \\
+        \vdots \\
+        f_{n-1}(x,t) \\
+        f_n(x,t)
+    \end{bmatrix}
+\end{equation*}
+
+Usando el método de elipsoides atractivas:
+
+\begin{itemize}
+    \item Verifique que la ley de control
+    
+    \begin{equation*}
+        u = -Kx 
+    \end{equation*}
+
+    estabiliza el sistema en el sentido de Lyapunov.
+
+    \textbf{Solución:}
+
+    Definimos la matriz de lazo cerrado como
+
+    \begin{equation*}
+        A_{lc} = A - BK
+    \end{equation*}
+
+    por lo que entonces el sistema es
+
+    \begin{equation*}
+        \dot{x} = A_{lc}x + f(x,t)
+    \end{equation*}
+
+    y proponemos que la no linealidad esta acotada por
+
+    \begin{equation*}
+        \|f(x,t)\| \leq D, \quad D>0
+    \end{equation*}
+
+    proponemos la función de Lyapunov
+
+    \begin{equation*}
+        V(x) = x^TPx
+    \end{equation*}
+
+    derivando
+
+    \begin{equation*}
+        \dot{V}(x) = x^T(A_{lc}^TP + PA_{lc})x + 2x^TPf(x,t)
+    \end{equation*}
+
+    ocupando la desigualdad de Young
+
+    \begin{equation*}
+        2ab \leq \epsilon a^2 + \frac{1}{\epsilon}b^2
+    \end{equation*}
+
+    donde $a=2x^TP$ y $b=f(x,t)$. Por lo tanto:
+
+    \begin{equation*}
+        2x^TPf(x,t) \leq \epsilon x^TP^2x + \frac{1}{\epsilon}||f(x,t)||^2
+    \end{equation*}
+
+
+    Sustituyendo la cota propuesta para la no linealidad, obtenemos
+
+    \begin{equation*}
+        2x^TPf(x,t) \leq \epsilon x^TP^2x + \frac{1}{\epsilon}D^2   
+    \end{equation*}
+
+    Sustituyendo en la derivada de la función de Lyapunov, obtenemos
+
+    \begin{equation*}
+        \dot{V}(x) \leq x^T(A_{lc}^TP + PA_{lc} + \epsilon P^2)x + \frac{1}{\epsilon}D^2
+    \end{equation*}
+
+    Queremos que
+
+    \begin{equation*}
+        \dot{V} \leq - \alpha V+\frac{1}{\epsilon}D^2 = -\alpha x^TPx + \frac{1}{\epsilon}D^2
+    \end{equation*}
+
+    Se propone entonces que
+
+    \begin{equation*}
+    x^{T}\left(A_{lc}^{T}P + PA_{lc} + \epsilon P^{2}\right)x \leq -\alpha x^{T}Px
+\end{equation*}
+
+    \begin{equation*}
+       x^t (A_{lc}^TP+PA_{lc}+\epsilon P^2 +\alpha P) x \leq 0
+    \end{equation*}
+
+    Con el complemento de Schur
+
+    \begin{equation*}
+        \begin{aligned}
+            s_{11} & = A_{lc}^TP+PA_{lc}+\epsilon P^2 +\alpha P \\
+            s_{12} & = P \\
+            s_{21} & = P \\
+            s_{22} & = -\frac{1}{\epsilon}I
+        \end{aligned}
+    \end{equation*}
+
+    Entonces
+
+    \begin{equation*}
+        \begin{bmatrix}
+            A_{lc}^TP+PA_{lc}+\epsilon P^2 +\alpha P & P \\
+            P & -\frac{1}{\epsilon}I
+        \end{bmatrix} \leq 0
+    \end{equation*}
+
+    Para verificar la elipsoide atractiva de
+
+    \begin{equation*}
+        \dot{V} \leq -\alpha V + \frac{1}{\epsilon}D^2
+    \end{equation*}
+
+    multiplicando por $e^{\alpha t}$
+
+    \begin{equation*}
+        e^{\alpha t}\dot{V} + \alpha e^{\alpha t}V \leq \frac{1}{\epsilon}D^2e^{\alpha t}
+    \end{equation*}
+
+    \begin{equation*}
+        \frac{d}{dt}(e^{\alpha t}V) \leq \frac{1}{\epsilon}D^2e^{\alpha t}
+    \end{equation*}
+
+    Integrando de $0$ a $t$
+
+    \begin{equation*}
+        e^{\alpha t}V(t) - V(0) \leq \frac{D^2}{\epsilon \alpha} (e^{\alpha t}-1)
+    \end{equation*}
+
+    \begin{equation*}
+        V(t) \leq V(0)e^{-\alpha t} + \frac{D^2}{\epsilon \alpha}(1-e^{-\alpha t})
+    \end{equation*}
+
+    Considerando el limite cuando $t \to \infty$
+
+    \begin{equation*}
+        V_{superior} \leq \frac{D^2}{\epsilon \alpha}
+    \end{equation*}
+
+    Ahora, considerando la desigualdad de Rayleigh, para A simetríco y considerando todo x, se tiene que
+
+    \begin{equation*}
+        \lambda_{min}(A)||x||^2 \leq x^TAx \leq \lambda_{max}(A)||x||^2
+    \end{equation*}
+
+    Considerando que $A=P$
+
+    \begin{equation*}
+        \lambda_{min}(P)||x||^2 \leq x^TPx = V(x) \to ||x|| \leq \sqrt{\frac{V(x)}{\lambda_{min}(P)}}
+    \end{equation*}
+
+    Combinando con el limite superior de V, obtenemos
+
+    \begin{equation*}
+        ||x|| \leq \sqrt{\frac{D^2}{\epsilon \alpha \lambda_{min}(P)}}
+    \end{equation*}
+
+    por lo que la elipsoide atractiva es
+
+    \begin{equation*}
+        \epsilon=\{x \in \mathbb{R} ^n : x^TPx \leq \frac{D^2}{\epsilon \alpha} \} 
+    \end{equation*}
+
+
+
+    \item Proponga un controlador por realimentación de estados que permita realizar el seguimiento de trayectorias por parte de la salida.
+
+\end{itemize}
