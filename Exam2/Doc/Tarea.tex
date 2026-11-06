@@ -115,33 +115,40 @@ Usando el método de elipsoides atractivas:
 
     Se propone entonces que
 
-    \begin{equation*}
-    x^{T}\left(A_{lc}^{T}P + PA_{lc} + \epsilon P^{2}\right)x \leq -\alpha x^{T}Px
+\begin{equation*}
+x^{T}\left(A_{lc}^{T}P + PA_{lc} + \epsilon P^{2}\right)x \leq -\alpha x^{T}Px
 \end{equation*}
 
+\begin{equation*}
+   x^T \left(A_{lc}^TP+PA_{lc}+\epsilon P^2 +\alpha P\right) x \leq 0
+\end{equation*}
+
+La expresión anterior no es lineal en $(P,K)$ porque $A_{lc}=A-BK$ produce el producto $PBK$, y el término $\epsilon P^2$ también es no lineal en $P$. Se aplican dos cambios:
+
+\begin{enumerate}
+    \item Cambio de variable $Y:=KP$ (equivalente a $K=YP^{-1}$), que elimina la bilinealidad $PBK$.
+    \item Se sustituye la desigualdad de Young por la $\Lambda$-desigualdad
     \begin{equation*}
-       x^t (A_{lc}^TP+PA_{lc}+\epsilon P^2 +\alpha P) x \leq 0
+        2x^TPf(x,t) \leq \tau_2\, x^TQ_xx + \frac{1}{\tau_2}f^TQ_f^{-1}f,
     \end{equation*}
+    con $\tau_2>0$ y $Q_x,Q_f>0$ dadas por la cota quasi-Lipschitz de $f$.
+\end{enumerate}
 
-    Con el complemento de Schur
-
-    \begin{equation*}
-        \begin{aligned}
-            s_{11} & = A_{lc}^TP+PA_{lc}+\epsilon P^2 +\alpha P \\
-            s_{12} & = P \\
-            s_{21} & = P \\
-            s_{22} & = -\frac{1}{\epsilon}I
-        \end{aligned}
-    \end{equation*}
-
-    Entonces
-
-    \begin{equation*}
-        \begin{bmatrix}
-            A_{lc}^TP+PA_{lc}+\epsilon P^2 +\alpha P & P \\
-            P & -\frac{1}{\epsilon}I
-        \end{bmatrix} \leq 0
-    \end{equation*}
+Con esto, la condición se escribe como la LMI
+\begin{equation*}
+    \begin{bmatrix}
+        AP+BY+PA^T+Y^TB^T+\alpha P+\tau_2Q_x & D \\
+        D^T & -\tau_2Q_f
+    \end{bmatrix} \leq 0,
+\end{equation*}
+sujeta a
+\begin{equation*}
+    P>0, \qquad \tau_2>0, \qquad \alpha \geq f_0\tau_2,
+\end{equation*}
+donde $D$ es la matriz de ganancia de la no linealidad, es decir, $f(x,t)=D\,\sigma(x,t)$ con $\|\sigma\|_{Q_f}^2\le f_0+\|x\|_{Q_x}^2$. Una vez resuelta y obtenidos $(P^*,Y^*,\tau_2^*)$, la ganancia se recupera como
+\begin{equation*}
+    K^* = Y^*(P^*)^{-1}.
+\end{equation*}
 
     Para verificar la elipsoide atractiva de
 
