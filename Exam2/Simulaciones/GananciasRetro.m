@@ -1,67 +1,54 @@
 clear; clc;
 
-% ==========================================
-% 1. Matrices aumentadas 
-% ==========================================
 A = [0 1 0 0;
     0 0 1 0;
     0 0 0 0;
     1 0 0 0];
 B = [0; 0; 1; 0];
 
-% ==========================================
-% 2. Variables de la LMI
-% ==========================================
+D_e = [1 0 0;
+    0 1 0;
+    0 0 1;
+    0 0 0];
+
+n_f = size(D_e, 2);  
 
 Q = sdpvar(4,4,'symmetric');
-F = sdpvar(1,4,'full'); 
+Y = sdpvar(1,4,'full');  
 
 % ==========================================
 % 3. Parámetros de diseño
 % ==========================================
-
-alpha = 0.1;    % Tasa de decaimiento 
-epsilon = 1;  % Parámetro de la LMI
-
-% ==========================================
-% 4. Construcción de la LMI
-% ==========================================
-
-s11 = A*Q + Q*A' - F'*B' - B*F + epsilon*eye(4) + alpha*Q;
-s12 = eye(4);
-s22 = -(1/epsilon)*eye(4);
-
-LMI = [s11, s12; 
-    s12', s22];
+alpha   = 2;
+delta   = 0.5;  
 
 % ==========================================
-% 5. Restricciones
+% 4. LMI 
 % ==========================================
+s11 = A*Q + Q*A' - B*Y - Y'*B' + alpha*Q;
+s12 = delta * D_e;
+s22 = -eye(n_f);
+
+LMI = [s11, s12; s12', s22];
 cons = [LMI <= 0, Q >= 0];
 
-% ==========================================
-% 6. Resolver
-% ==========================================
-ops = sdpsettings('solver','sedumi','verbose',1);
-sol = optimize(cons, [], ops); %[output:35d52370]
+sol = optimize(cons); %[output:35d52370]
 
 % ==========================================
-% 7. Recuperar las ganancias
+% 6. Recuperar 
 % ==========================================
-
     Q_val = double(Q);
-    F_val = double(F);
+    Y_val = double(Y);
 
     P_val = inv(Q_val);
-    K_val = F_val * Q_val; 
+    K_val = Y_val * inv(Q_val);   % K = Y * Q^{-1}
 
-    disp('=========================================='); %[output:004619ec]
-    disp('   RESULTADOS'); %[output:7868ff9e]
-    disp('=========================================='); %[output:4c938d08]
-    disp('Ganancias calculadas (k1, k2, k3, ki):'); %[output:578a7a70]
-    disp(K_val); %[output:6cc7bf77]
+    K=[K_val(1);K_val(2);K_val(3);K_val(4)];
 
-    
+    disp('=========================================='); %[output:3f6f0eab]
+    disp('Ganancias calculadas (k1, k2, k3, ki):'); %[output:3fd011a4]
+    disp(K_val); %[output:8a149821]
+
 
 %[appendix]{"version":"1.0"}
 %---
@@ -69,20 +56,14 @@ sol = optimize(cons, [], ops); %[output:35d52370]
 %   data: {"layout":"onright"}
 %---
 %[output:35d52370]
-%   data: {"dataType":"text","outputData":{"text":"SeDuMi 1.3.7 by AdvOL, 2005-2008 and Jos F. Sturm, 1998-2003.\nAlg = 2: xz-corrector, theta = 0.250, beta = 0.500\neqs m = 14, order n = 13, dim = 81, blocks = 3\nnnz(A) = 36 + 0, nnz(ADA) = 196, nnz(L) = 105\n it :     b*y       gap    delta  rate   t\/tP*  t\/tD*   feas cg cg  prec\n  0 :            2.40E+00 0.000\n  1 :   0.00E+00 5.73E-01 0.000 0.2391 0.9000 0.9000   0.59  1  1  2.1E+00\n  2 :   0.00E+00 2.06E-01 0.000 0.3593 0.9000 0.9000   0.42  1  1  9.9E-01\n  3 :   0.00E+00 4.52E-02 0.000 0.2196 0.9000 0.9000   0.93  1  1  2.1E-01\n  4 :   0.00E+00 1.69E-03 0.000 0.0375 0.9900 0.9900   1.03  1  1  7.7E-03\n  5 :   0.00E+00 7.72E-05 0.000 0.0456 0.9900 0.9900   1.00  1  1  3.5E-04\n  6 :   0.00E+00 3.49E-06 0.000 0.0452 0.9900 0.9900   1.00  1  1  1.6E-05\n  7 :   0.00E+00 1.57E-07 0.000 0.0451 0.9900 0.9900   1.00  1  1  7.2E-07\n  8 :   0.00E+00 7.07E-09 0.000 0.0450 0.9900 0.9900   1.00  1  1  3.2E-08\n  9 :   0.00E+00 3.18E-10 0.000 0.0449 0.9900 0.9900   1.00  1  1  1.5E-09\n 10 :   0.00E+00 1.42E-11 0.000 0.0448 0.9900 0.9900   1.00  1  1  6.5E-11\n\niter seconds digits       c*x               b*y\n 10      0.0   Inf -5.6938556807e-12  0.0000000000e+00\n|Ax-b| =   4.3e-11, [Ay-c]_+ =   0.0E+00, |x|=  2.5e-10, |y|=  2.9e+01\n\nDetailed timing (sec)\n   Pre          IPM          Post\n4.700E-02    1.580E-01    9.998E-03    \nMax-norms: ||b||=0, ||c|| = 2,\nCholesky |add|=0, |skip| = 0, ||L.L|| = 1.56229.\n","truncated":false}}
+%   data: {"dataType":"text","outputData":{"text":"SeDuMi 1.3.7 by AdvOL, 2005-2008 and Jos F. Sturm, 1998-2003.\nAlg = 2: xz-corrector, theta = 0.250, beta = 0.500\neqs m = 14, order n = 12, dim = 66, blocks = 3\nnnz(A) = 36 + 0, nnz(ADA) = 196, nnz(L) = 105\n it :     b*y       gap    delta  rate   t\/tP*  t\/tD*   feas cg cg  prec\n  0 :            5.04E+00 0.000\n  1 :   0.00E+00 1.40E+00 0.000 0.2773 0.9000 0.9000   1.35  1  1  2.3E+00\n  2 :   0.00E+00 4.47E-01 0.000 0.3201 0.9000 0.9000   1.00  1  1  1.4E+00\n  3 :   0.00E+00 9.31E-02 0.000 0.2081 0.9000 0.9000   0.71  1  1  1.3E+00\n  4 :   0.00E+00 3.10E-02 0.000 0.3329 0.9000 0.9000   0.26  1  1  1.7E+00\n  5 :   0.00E+00 1.49E-03 0.000 0.0481 0.9900 0.9900   0.76  1  1  1.7E+00\n  6 :   0.00E+00 3.88E-04 0.000 0.2600 0.9000 0.9000   0.99  1  1  6.3E-01\n  7 :   0.00E+00 9.63E-05 0.000 0.2484 0.9000 0.9000   1.00  1  1  1.5E-01\n  8 :   0.00E+00 2.30E-05 0.000 0.2384 0.9000 0.9000   1.00  1  1  3.7E-02\n  9 :   0.00E+00 5.29E-06 0.000 0.2305 0.9000 0.9000   1.00  1  1  8.4E-03\n 10 :   0.00E+00 1.18E-06 0.000 0.2240 0.9000 0.9000   1.00  1  1  1.9E-03\n 11 :   0.00E+00 2.59E-07 0.000 0.2187 0.9000 0.9000   1.00  1  1  4.1E-04\n 12 :   0.00E+00 5.55E-08 0.000 0.2141 0.9000 0.9000   1.00  1  1  8.6E-05\n 13 :   0.00E+00 1.17E-08 0.000 0.2102 0.9000 0.9000   1.00  1  1  1.8E-05\n 14 :   0.00E+00 2.41E-09 0.000 0.2068 0.9000 0.9000   1.00  1  1  3.7E-06\n 15 :   0.00E+00 4.92E-10 0.000 0.2038 0.9000 0.9000   1.00  1  1  7.6E-07\n 16 :   0.00E+00 9.89E-11 0.000 0.2011 0.9000 0.9000   1.00  1  1  1.5E-07\n 17 :   0.00E+00 1.96E-11 0.000 0.1986 0.9000 0.9000   1.00  1  1  3.0E-08\n 18 :   0.00E+00 3.86E-12 0.000 0.1964 0.9000 0.9000   1.00  1  1  5.9E-09\n 19 :   0.00E+00 7.50E-13 0.000 0.1944 0.9000 0.9000   1.00  1  1  1.1E-09\n 20 :   0.00E+00 1.44E-13 0.000 0.1927 0.9000 0.9000   1.00  1  1  2.2E-10\n\niter seconds digits       c*x               b*y\n 20      0.1   2.7  1.1839374919e-13  0.0000000000e+00\n|Ax-b| =   2.2e-13, [Ay-c]_+ =   0.0E+00, |x|=  5.1e-12, |y|=  3.5e+01\n\nDetailed timing (sec)\n   Pre          IPM          Post\n2.499E-02    1.820E-01    7.001E-03    \nMax-norms: ||b||=0, ||c|| = 1,\nCholesky |add|=0, |skip| = 0, ||L.L|| = 1.33473.\n","truncated":false}}
 %---
-%[output:004619ec]
+%[output:3f6f0eab]
 %   data: {"dataType":"text","outputData":{"text":"==========================================\n","truncated":false}}
 %---
-%[output:7868ff9e]
-%   data: {"dataType":"text","outputData":{"text":"   RESULTADOS\n","truncated":false}}
-%---
-%[output:4c938d08]
-%   data: {"dataType":"text","outputData":{"text":"==========================================\n","truncated":false}}
-%---
-%[output:578a7a70]
+%[output:3fd011a4]
 %   data: {"dataType":"text","outputData":{"text":"Ganancias calculadas (k1, k2, k3, ki):\n","truncated":false}}
 %---
-%[output:6cc7bf77]
-%   data: {"dataType":"text","outputData":{"text":"  -56.8272   97.1220   27.8327  -99.4097\n\n","truncated":false}}
+%[output:8a149821]
+%   data: {"dataType":"text","outputData":{"text":"  156.5193   78.6849   14.0633  107.4947\n\n","truncated":false}}
 %---

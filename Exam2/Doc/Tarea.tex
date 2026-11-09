@@ -52,163 +52,437 @@ Usando el método de elipsoides atractivas:
 
     \textbf{Solución:}
 
-    Definimos la matriz de lazo cerrado como
+Definimos la matriz de lazo cerrado como
+\begin{equation*}
+    A_{lc} = A - BK
+\end{equation*}
+por lo que entonces el sistema es
+\begin{equation*}
+    \dot{x} = A_{lc}x + f(x,t)
+\end{equation*}
+y proponemos que la no linealidad está acotada por
+\begin{equation*}
+    \|f(x,t)\| \leq D, \quad D>0
+\end{equation*}
 
-    \begin{equation*}
-        A_{lc} = A - BK
-    \end{equation*}
+Proponemos la función de Lyapunov
+\begin{equation*}
+    V(x) = x^TPx
+\end{equation*}
+derivando
+\begin{equation*}
+    \dot{V}(x) = x^T(A_{lc}^TP + PA_{lc})x + 2x^TPf(x,t)
+\end{equation*}
 
-    por lo que entonces el sistema es
+Ocupando la desigualdad de Young
+\begin{equation*}
+    2ab \leq \epsilon a^2 + \frac{1}{\epsilon}b^2
+\end{equation*}
+donde \(a = \|Px\|\) y \(b = \|f(x,t)\|\), se tiene que
+\begin{equation*}
+    2x^TPf(x,t) \leq \epsilon x^TP^2x + \frac{1}{\epsilon}\|f(x,t)\|^2
+\end{equation*}
 
-    \begin{equation*}
-        \dot{x} = A_{lc}x + f(x,t)
-    \end{equation*}
+Sustituyendo la cota propuesta para la no linealidad, obtenemos
+\begin{equation*}
+    2x^TPf(x,t) \leq \epsilon x^TP^2x + \frac{1}{\epsilon}D^2   
+\end{equation*}
 
-    y proponemos que la no linealidad esta acotada por
+Sustituyendo en la derivada de la función de Lyapunov, obtenemos
+\begin{equation*}
+    \dot{V}(x) \leq x^T(A_{lc}^TP + PA_{lc} + \epsilon P^2)x + \frac{1}{\epsilon}D^2
+\end{equation*}
 
-    \begin{equation*}
-        \|f(x,t)\| \leq D, \quad D>0
-    \end{equation*}
+Queremos que
+\begin{equation*}
+    \dot{V} \leq - \alpha V+\frac{1}{\epsilon}D^2 = -\alpha x^TPx + \frac{1}{\epsilon}D^2
+\end{equation*}
 
-    proponemos la función de Lyapunov
-
-    \begin{equation*}
-        V(x) = x^TPx
-    \end{equation*}
-
-    derivando
-
-    \begin{equation*}
-        \dot{V}(x) = x^T(A_{lc}^TP + PA_{lc})x + 2x^TPf(x,t)
-    \end{equation*}
-
-    ocupando la desigualdad de Young
-
-    \begin{equation*}
-        2ab \leq \epsilon a^2 + \frac{1}{\epsilon}b^2
-    \end{equation*}
-
-    donde $a=2x^TP$ y $b=f(x,t)$. Por lo tanto:
-
-    \begin{equation*}
-        2x^TPf(x,t) \leq \epsilon x^TP^2x + \frac{1}{\epsilon}||f(x,t)||^2
-    \end{equation*}
-
-
-    Sustituyendo la cota propuesta para la no linealidad, obtenemos
-
-    \begin{equation*}
-        2x^TPf(x,t) \leq \epsilon x^TP^2x + \frac{1}{\epsilon}D^2   
-    \end{equation*}
-
-    Sustituyendo en la derivada de la función de Lyapunov, obtenemos
-
-    \begin{equation*}
-        \dot{V}(x) \leq x^T(A_{lc}^TP + PA_{lc} + \epsilon P^2)x + \frac{1}{\epsilon}D^2
-    \end{equation*}
-
-    Queremos que
-
-    \begin{equation*}
-        \dot{V} \leq - \alpha V+\frac{1}{\epsilon}D^2 = -\alpha x^TPx + \frac{1}{\epsilon}D^2
-    \end{equation*}
-
-    Se propone entonces que
-
+Se propone entonces que
 \begin{equation*}
 x^{T}\left(A_{lc}^{T}P + PA_{lc} + \epsilon P^{2}\right)x \leq -\alpha x^{T}Px
 \end{equation*}
-
 \begin{equation*}
    x^T \left(A_{lc}^TP+PA_{lc}+\epsilon P^2 +\alpha P\right) x \leq 0
 \end{equation*}
 
-La expresión anterior no es lineal en $(P,K)$ porque $A_{lc}=A-BK$ produce el producto $PBK$, y el término $\epsilon P^2$ también es no lineal en $P$. Se aplican dos cambios:
+La expresión anterior no es lineal en \((P,K)\) porque \(A_{lc}=A-BK\) produce el producto \(PBK\), y el término \(\epsilon P^2\) también es no lineal. Se aplican los siguientes pasos para transformarla en una LMI. Se sustituyendo \(A_{lc} = A - BK\) en la condición:
 
-\begin{enumerate}
-    \item Cambio de variable $Y:=KP$ (equivalente a $K=YP^{-1}$), que elimina la bilinealidad $PBK$.
-    \item Se sustituye la desigualdad de Young por la $\Lambda$-desigualdad
-    \begin{equation*}
-        2x^TPf(x,t) \leq \tau_2\, x^TQ_xx + \frac{1}{\tau_2}f^TQ_f^{-1}f,
-    \end{equation*}
-    con $\tau_2>0$ y $Q_x,Q_f>0$ dadas por la cota quasi-Lipschitz de $f$.
-\end{enumerate}
+\begin{equation*}
+    (A - BK)^T P + P(A - BK) + \epsilon P^2 + \alpha P \leq 0
+\end{equation*}
+Desarrollando:
+\begin{equation*}
+    A^T P + P A - K^T B^T P - P B K + \epsilon P^2 + \alpha P \leq 0
+\end{equation*}
 
-Con esto, la condición se escribe como la LMI
+El término \(P B K\) es bilineal, para eliminarlo se propone el cambio de variable:
+\begin{equation*}
+    Y := K P \quad \Longleftrightarrow \quad K = Y P^{-1}
+\end{equation*}
+Sustituyendo en el término bilineal:
+\begin{equation*}
+    P B K = P B (Y P^{-1}) = P B Y P^{-1}
+\end{equation*}
+y su transpuesto:
+\begin{equation*}
+    K^T B^T P = (Y P^{-1})^T B^T P = P^{-T} Y^T B^T P
+\end{equation*}
+
+Se multiplica la desigualdad por \(P^{-1}\) a izquierda y a derecha. Definiendo \(Q = P^{-1}\), se obtiene:
+\begin{equation*}
+    Q A^T + A Q - Q (P B Y P^{-1}) Q - Q (P^{-1} Y^T B^T P) Q + \epsilon Q P^2 Q + \alpha Q \leq 0
+\end{equation*}
+Simplificando cada término:
+\begin{equation*}
+    Q (P B Y P^{-1}) Q = (Q P) B Y (P^{-1} Q) = I \cdot B Y \cdot I = B Y
+\end{equation*}
+\begin{equation*}
+    Q (P^{-1} Y^T B^T P) Q = (Q P^{-1}) Y^T B^T (P Q) = I \cdot Y^T B^T \cdot I = Y^T B^T
+\end{equation*}
+\begin{equation*}
+    Q P^2 Q = Q P \cdot P Q = I \cdot I = I
+\end{equation*}
+Por lo tanto, la condición se transforma en:
+\begin{equation*}
+    A Q + Q A^T - B Y - Y^T B^T + \epsilon I + \alpha Q \leq 0
+\end{equation*}
+donde \(Q = P^{-1} \succ 0\). 
+
+La desigualdad anterior contiene el término \(\epsilon I\) que no depende de las variables. Para incorporarlo a una LMI, se aplica el complemento de Schur. Para una matriz simétrica particionada
+\begin{equation*}
+    M = \begin{bmatrix} M_{11} & M_{12} \\ M_{12}^T & M_{22} \end{bmatrix},
+\end{equation*}
+se tiene que \(M \prec 0\) si y solo si \(M_{22} \prec 0\) y \(M_{11} - M_{12} M_{22}^{-1} M_{12}^T \prec 0\). Considerando que la desigualdad
+\begin{equation*}
+    A Q + Q A^T - B Y - Y^T B^T + \alpha Q + \epsilon I \leq 0
+\end{equation*}
+se puede reescribir como:
+\begin{equation*}
+    A Q + Q A^T - B Y - Y^T B^T + \alpha Q + \frac{1}{\delta} (\delta I)^T (\epsilon I)^{-1} (\delta I) \leq 0
+\end{equation*}
+donde \(\delta > 0\) es un parámetro de escalamiento. Aplicando el complemento de Schur con:
+\begin{equation*}
+    M_{11} = A Q + Q A^T - B Y - Y^T B^T + \alpha Q + \epsilon I, \quad
+    M_{12} = \delta I, \quad
+    M_{22} = -\epsilon I,
+\end{equation*}
+se obtiene la LMI:
 \begin{equation*}
     \begin{bmatrix}
-        AP+BY+PA^T+Y^TB^T+\alpha P+\tau_2Q_x & D \\
-        D^T & -\tau_2Q_f
+        A Q + Q A^T - B Y - Y^T B^T + \alpha Q + \epsilon I & \delta I \\
+        \delta I & -\epsilon I
+    \end{bmatrix} \leq 0.
+\end{equation*}
+
+Para mantener la simetría y la estructura estándar de la LMI en la variable \(P\), se puede aplicar el complemento de Schur directamente sobre la desigualdad en \(P\). Partiendo de:
+\begin{equation*}
+    A^T P + P A - K^T B^T P - P B K + \epsilon P^2 + \alpha P \leq 0,
+\end{equation*}
+y usando \(Y = KP\), se tiene \(P B K = B Y\) y \(K^T B^T P = Y^T B^T\). Entonces:
+\begin{equation*}
+    A P + P A^T - B Y - Y^T B^T + \epsilon P^2 + \alpha P \leq 0.
+\end{equation*}
+El término \(\epsilon P^2\) se puede linealizar aplicando el complemento de Schur con un parámetro \(\delta > 0\):
+\begin{equation*}
+    \epsilon P^2 = (\delta P)^T (\epsilon I)^{-1} (\delta P) \quad \text{si } \delta = \sqrt{\epsilon}.
+\end{equation*}
+Aplicando Schur a:
+\begin{equation*}
+    M_{11} = A P + P A^T - B Y - Y^T B^T + \alpha P + \epsilon I, \quad
+    M_{12} = \delta P, \quad
+    M_{22} = -\epsilon I,
+\end{equation*}
+se obtiene finalmente:
+\begin{equation*}
+    \begin{bmatrix}
+        A P + P A^T + B Y + Y^T B^T + \alpha P + \epsilon I & \delta P \\
+        \delta P & -\epsilon I
     \end{bmatrix} \leq 0,
 \end{equation*}
 sujeta a
 \begin{equation*}
-    P>0, \qquad \tau_2>0, \qquad \alpha \geq f_0\tau_2,
+    P \succ 0, \qquad \alpha > 0, \qquad \epsilon > 0, \qquad \delta > 0.
 \end{equation*}
-donde $D$ es la matriz de ganancia de la no linealidad, es decir, $f(x,t)=D\,\sigma(x,t)$ con $\|\sigma\|_{Q_f}^2\le f_0+\|x\|_{Q_x}^2$. Una vez resuelta y obtenidos $(P^*,Y^*,\tau_2^*)$, la ganancia se recupera como
+Una vez resuelta la LMI y obtenidos \((P, Y)\), la ganancia se recupera como
 \begin{equation*}
-    K^* = Y^*(P^*)^{-1}.
+    K = Y (P)^{-1}.
 \end{equation*}
 
-    Para verificar la elipsoide atractiva de
+Para verificar la elipsoide atractiva de
+\begin{equation*}
+    \dot{V} \leq -\alpha V + \frac{1}{\epsilon}D^2
+\end{equation*}
+multiplicando por \(e^{\alpha t}\)
+\begin{equation*}
+    e^{\alpha t}\dot{V} + \alpha e^{\alpha t}V \leq \frac{1}{\epsilon}D^2e^{\alpha t}
+\end{equation*}
+\begin{equation*}
+    \frac{d}{dt}(e^{\alpha t}V) \leq \frac{1}{\epsilon}D^2e^{\alpha t}
+\end{equation*}
+Integrando de \(0\) a \(t\)
+\begin{equation*}
+    e^{\alpha t}V(t) - V(0) \leq \frac{D^2}{\epsilon \alpha} (e^{\alpha t}-1)
+\end{equation*}
+\begin{equation*}
+    V(t) \leq V(0)e^{-\alpha t} + \frac{D^2}{\epsilon \alpha}(1-e^{-\alpha t})
+\end{equation*}
+Considerando el límite cuando \(t \to \infty\)
+\begin{equation*}
+    V_{superior} \leq \frac{D^2}{\epsilon \alpha}
+\end{equation*}
 
-    \begin{equation*}
-        \dot{V} \leq -\alpha V + \frac{1}{\epsilon}D^2
-    \end{equation*}
-
-    multiplicando por $e^{\alpha t}$
-
-    \begin{equation*}
-        e^{\alpha t}\dot{V} + \alpha e^{\alpha t}V \leq \frac{1}{\epsilon}D^2e^{\alpha t}
-    \end{equation*}
-
-    \begin{equation*}
-        \frac{d}{dt}(e^{\alpha t}V) \leq \frac{1}{\epsilon}D^2e^{\alpha t}
-    \end{equation*}
-
-    Integrando de $0$ a $t$
-
-    \begin{equation*}
-        e^{\alpha t}V(t) - V(0) \leq \frac{D^2}{\epsilon \alpha} (e^{\alpha t}-1)
-    \end{equation*}
-
-    \begin{equation*}
-        V(t) \leq V(0)e^{-\alpha t} + \frac{D^2}{\epsilon \alpha}(1-e^{-\alpha t})
-    \end{equation*}
-
-    Considerando el limite cuando $t \to \infty$
-
-    \begin{equation*}
-        V_{superior} \leq \frac{D^2}{\epsilon \alpha}
-    \end{equation*}
-
-    Ahora, considerando la desigualdad de Rayleigh, para A simetríco y considerando todo x, se tiene que
-
-    \begin{equation*}
-        \lambda_{min}(A)||x||^2 \leq x^TAx \leq \lambda_{max}(A)||x||^2
-    \end{equation*}
-
-    Considerando que $A=P$
-
-    \begin{equation*}
-        \lambda_{min}(P)||x||^2 \leq x^TPx = V(x) \to ||x|| \leq \sqrt{\frac{V(x)}{\lambda_{min}(P)}}
-    \end{equation*}
-
-    Combinando con el limite superior de V, obtenemos
-
-    \begin{equation*}
-        ||x|| \leq \sqrt{\frac{D^2}{\epsilon \alpha \lambda_{min}(P)}}
-    \end{equation*}
-
-    por lo que la elipsoide atractiva es
-
-    \begin{equation*}
-        \epsilon=\{x \in \mathbb{R} ^n : x^TPx \leq \frac{D^2}{\epsilon \alpha} \} 
-    \end{equation*}
+Ahora, considerando la desigualdad de Rayleigh, para \(P\) simétrica y definida positiva, y para todo \(x\), se tiene que
+\begin{equation*}
+    \lambda_{\min}(P)\|x\|^2 \leq x^TPx \leq \lambda_{\max}(P)\|x\|^2
+\end{equation*}
+Considerando que \(A=P\)
+\begin{equation*}
+    \lambda_{\min}(P)\|x\|^2 \leq x^TPx = V(x) \to \|x\| \leq \sqrt{\frac{V(x)}{\lambda_{\min}(P)}}
+\end{equation*}
+Combinando con el límite superior de \(V\), obtenemos
+\begin{equation*}
+    \|x\| \leq \sqrt{\frac{D^2}{\epsilon \alpha \lambda_{\min}(P)}}
+\end{equation*}
+por lo que la elipsoide atractiva es
+\begin{equation*}
+    \mathcal{E}=\left\{x \in \mathbb{R}^n : x^TPx \leq \frac{D^2}{\epsilon \alpha} \right\}
+\end{equation*}
 
 
 
     \item Proponga un controlador por realimentación de estados que permita realizar el seguimiento de trayectorias por parte de la salida
+    
+    Sea el sistema no lineal SISO:
+\begin{equation*}
+    \begin{aligned}
+        \dot{x} &= A x + f(x,t) + B u \\
+        y &= C x
+    \end{aligned}
+\end{equation*}
+donde \(x \in \mathbb{R}^n\), \(u \in \mathbb{R}\), \(y \in \mathbb{R}\), \(A \in \mathbb{R}^{n \times n}\), \(B \in \mathbb{R}^{n \times 1}\), \(C \in \mathbb{R}^{1 \times n}\), y \(f(x,t)\) es una no linealidad acotada.
+
+Se desea que la salida \(y\) siga una referencia \(r(t)\). Se define el error de seguimiento de la salida como:
+\begin{equation*}
+    e = r - C x.
+\end{equation*}
+Para garantizar convergencia asintótica del error, se agrega el estado integral:
+\begin{equation*}
+    x_{n+1} = \int e \, dt = \int (r - C x) \, dt \quad \Rightarrow \quad \dot{x}_{n+1} = e = r - C x.
+\end{equation*}
+
+Para el caso general, los errores sucesivos se definen como las derivadas sucesivas del error de salida:
+\begin{equation*}
+    e_i = \frac{d^{i-1}}{dt^{i-1}}(r - y), \quad i = 1, 2, \dots, n.
+\end{equation*}
+Esta definición es válida cuando el sistema tiene grado relativo \(n\), es decir, cuando la entrada \(u\) aparece por primera vez en la \(n\)-ésima derivada de la salida.
+
+En el caso particular en que la planta está en forma canónica controlable  y \(C = \begin{bmatrix} 1 & 0 & \cdots & 0 \end{bmatrix}\), se tiene \(y = x_1\), y los errores de seguimiento se reducen a:
+\begin{equation*}
+    e_1 = r - x_1, \quad e_2 = \dot{r} - x_2, \quad \dots, \quad e_n = r^{(n-1)} - x_n,
+\end{equation*}
+donde \(r^{(i-1)}\) es la derivada de orden \(i-1\) de la referencia.
+
+Se define el vector de errores aumentado:
+\begin{equation*}
+    e = \begin{bmatrix} e_1 \\ e_2 \\ \vdots \\ e_n \\ x_{n+1} \end{bmatrix} \in \mathbb{R}^{n+1}.
+\end{equation*}
+
+Se propone la ley de control por realimentación de estados sobre el error:
+\begin{equation*}
+    u = -K e, \quad K = \begin{bmatrix} k_1 & k_2 & \cdots & k_n & k_i \end{bmatrix} \in \mathbb{R}^{1 \times (n+1)}.
+\end{equation*}
+
+Derivando los errores y sustituyendo la dinámica del sistema, se obtiene la dinámica del error en forma matricial:
+\begin{equation*}
+    \dot{e} = A_e e + B_e u + D_e f(x,t),
+\end{equation*}
+donde las matrices \(A_e\), \(B_e\) y \(D_e\) se construyen a partir de las matrices originales del sistema. Para el caso de una planta en forma canónica controlable con un integrador adicional, se tiene:
+\begin{equation*}
+    A_e = \begin{bmatrix}
+        0 & 1 & 0 & \cdots & 0 & 0 \\
+        0 & 0 & 1 & \cdots & 0 & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & 0 & \cdots & 1 & 0 \\
+        0 & 0 & 0 & \cdots & 0 & 0 \\
+        1 & 0 & 0 & \cdots & 0 & 0
+    \end{bmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}, \quad
+    B_e = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ 1 \\ 0 \end{bmatrix} \in \mathbb{R}^{(n+1) \times 1},
+\end{equation*}
+\begin{equation*}
+    D_e = \begin{bmatrix}
+        I_{n \times n} \\
+        0_{1 \times n}
+    \end{bmatrix} \in \mathbb{R}^{(n+1) \times n}.
+\end{equation*}
+La no linealidad \(f(x,t)\) actúa como una perturbación \textit{mismatched}, ya que \(D_e \neq B_e\), lo que impide su cancelación directa mediante la entrada \(u\). Sustituyendo la ley de control \(u = -K e\), el sistema en lazo cerrado es:
+
+\begin{equation*}
+    \dot{e} = A_{lc} e + D_e f(x,t), \quad A_{lc} = A_e - B_e K.
+\end{equation*}
+
+Se supone que la perturbación está acotada por:
+\begin{equation*}
+    \|f(x,t)\| \leq D, \quad D > 0.
+\end{equation*}
+
+Se propone la función candidata de Lyapunov:
+\begin{equation*}
+    V(e) = e^T P e, \quad P > 0.
+\end{equation*}
+
+Derivando:
+\begin{equation*}
+    \dot{V}(e) = e^T(A_{lc}^T P + P A_{lc})e + 2e^T P D_e f(x,t).
+\end{equation*}
+
+Ocupando la desigualdad de Young:
+\begin{equation*}
+    2ab \leq \epsilon a^2 + \frac{1}{\epsilon}b^2
+\end{equation*}
+donde \(a = \|D_e^T P e\|\) y \(b = \|f(x,t)\|\), se tiene que:
+\begin{equation*}
+    2e^T P D_e f(x,t) \leq \epsilon e^T P D_e D_e^T P e + \frac{1}{\epsilon}\|f(x,t)\|^2.
+\end{equation*}
+
+Sustituyendo la cota de la no linealidad:
+\begin{equation*}
+    2e^T P D_e f(x,t) \leq \epsilon e^T P D_e D_e^T P e + \frac{1}{\epsilon}D^2.
+\end{equation*}
+
+Sustituyendo en la derivada de \(V\):
+\begin{equation*}
+    \dot{V}(e) \leq e^T\left( A_{lc}^T P + P A_{lc} + \epsilon P D_e D_e^T P \right)e + \frac{1}{\epsilon}D^2.
+\end{equation*}
+
+Se desea que:
+\begin{equation*}
+    \dot{V}(e) \leq -\alpha V(e) + \frac{1}{\epsilon}D^2 = -\alpha e^T P e + \frac{1}{\epsilon}D^2.
+\end{equation*}
+
+Por lo tanto, se requiere:
+\begin{equation*}
+    A_{lc}^T P + P A_{lc} + \epsilon P D_e D_e^T P + \alpha P \leq 0.
+\end{equation*}
+
+Se aplican los siguientes pasos para transformar la expresion de una BMI en una LMI. Sustituyendo \(A_{lc} = A_e - B_e K\):
+\begin{equation*}
+    (A_e - B_e K)^T P + P(A_e - B_e K) + \epsilon P D_e D_e^T P + \alpha P \leq 0.
+\end{equation*}
+Desarrollando:
+\begin{equation*}
+    A_e^T P + P A_e - K^T B_e^T P - P B_e K + \epsilon P D_e D_e^T P + \alpha P \leq 0.
+\end{equation*}
+
+Se propone el cambio de variable:
+\begin{equation*}
+    Y := K P \quad \Longleftrightarrow \quad K = Y P^{-1}.
+\end{equation*}
+Sustituyendo \(K = Y P^{-1}\) en el término bilineal:
+\begin{equation*}
+    P B_e K = P B_e (Y P^{-1}) = P B_e Y P^{-1}.
+\end{equation*}
+
+Definiendo \(Q := P^{-1}\), se obtiene:
+
+\begin{equation*}
+    Q A_e^T + A_e Q - Q (P B_e Y P^{-1}) Q - Q (P^{-1} Y^T B_e^T P) Q + \epsilon Q P D_e D_e^T P Q + \alpha Q \leq 0.
+\end{equation*}
+Simplificando cada término usando \(Q = P^{-1}\):
+\begin{equation*}
+    Q (P B_e Y P^{-1}) Q = (Q P) B_e Y (P^{-1} Q) = I \cdot B_e Y \cdot I = B_e Y,
+\end{equation*}
+\begin{equation*}
+    Q (P^{-1} Y^T B_e^T P) Q = (Q P^{-1}) Y^T B_e^T (P Q) = I \cdot Y^T B_e^T \cdot I = Y^T B_e^T,
+\end{equation*}
+\begin{equation*}
+    Q P D_e D_e^T P Q = (Q P) D_e D_e^T (P Q) = I \cdot D_e D_e^T \cdot I = D_e D_e^T.
+\end{equation*}
+Por lo tanto, la condición se transforma en:
+\begin{equation*}
+    A_e Q + Q A_e^T - B_e Y - Y^T B_e^T + \epsilon D_e D_e^T + \alpha Q \leq 0,
+\end{equation*}
+donde \(Q = P^{-1} \succ 0\). 
+
+Aplicando el complemento de Schur como:
+
+\begin{equation*}
+    M = \begin{bmatrix} M_{11} & M_{12} \\ M_{12}^T & M_{22} \end{bmatrix},
+\end{equation*}
+se tiene que \(M \prec 0\) si y solo si \(M_{22} \prec 0\) y \(M_{11} - M_{12} M_{22}^{-1} M_{12}^T \prec 0\). La desigualdad
+
+\begin{equation*}
+    A_e Q + Q A_e^T - B_e Y - Y^T B_e^T + \alpha Q + \epsilon D_e D_e^T \leq 0
+\end{equation*}
+se puede reescribir como:
+\begin{equation*}
+    A_e Q + Q A_e^T - B_e Y - Y^T B_e^T + \alpha Q + (\sqrt{\epsilon} D_e) (\sqrt{\epsilon} D_e)^T \leq 0.
+\end{equation*}
+Aplicando el complemento de Schur con:
+\begin{equation*}
+    M_{11} = A_e Q + Q A_e^T - B_e Y - Y^T B_e^T + \alpha Q, \quad
+    M_{12} = \sqrt{\epsilon} D_e, \quad
+    M_{22} = -I,
+\end{equation*}
+se obtiene la LMI:
+\begin{equation*}
+    \begin{bmatrix}
+        A_e Q + Q A_e^T - B_e Y - Y^T B_e^T + \alpha Q & \sqrt{\epsilon} D_e \\
+        \sqrt{\epsilon} D_e^T & -I
+    \end{bmatrix} \leq 0.
+\end{equation*}
+
+Equivalentemente, definiendo \(\delta = \sqrt{\epsilon}\), la LMI se escribe como:
+\begin{equation*}
+    \begin{bmatrix}
+        A_e Q + Q A_e^T - B_e Y - Y^T B_e^T + \alpha Q & \delta D_e \\
+        \delta D_e^T & -I
+    \end{bmatrix} \leq 0,
+\end{equation*}
+sujeta a:
+\begin{equation*}
+    Q > 0, \quad \alpha > 0, \quad \epsilon > 0.
+\end{equation*}
+Una vez resuelta la LMI y obtenidos \((Q, Y)\), la ganancia se recupera como:
+\begin{equation*}
+    K = Y (Q)^{-1}.
+\end{equation*}
+
+Para comprobar la cota del error por elipsoide atractiva, partimos de:
+\begin{equation*}
+    \dot{V}(e) \leq -\alpha V(e) + \frac{1}{\epsilon}D^2.
+\end{equation*}
+Multiplicando por \(e^{\alpha t}\):
+\begin{equation*}
+    e^{\alpha t}\dot{V} + \alpha e^{\alpha t}V \leq \frac{1}{\epsilon}D^2 e^{\alpha t} \quad \Rightarrow \quad \frac{d}{dt}(e^{\alpha t}V) \leq \frac{1}{\epsilon}D^2 e^{\alpha t}.
+\end{equation*}
+Integrando de \(0\) a \(t\):
+\begin{equation*}
+    e^{\alpha t}V(t) - V(0) \leq \frac{D^2}{\epsilon \alpha}(e^{\alpha t} - 1),
+\end{equation*}
+\begin{equation*}
+    V(t) \leq V(0)e^{-\alpha t} + \frac{D^2}{\epsilon \alpha}(1 - e^{-\alpha t}).
+\end{equation*}
+Tomando el límite cuando \(t \to \infty\):
+\begin{equation*}
+    \limsup_{t \to \infty} V(e(t)) \leq \frac{D^2}{\epsilon \alpha}.
+\end{equation*}
+Usando la desigualdad de Rayleigh:
+\begin{equation*}
+    \lambda_{\min}(P)\|e\|^2 \leq e^T P e = V(e) \quad \Rightarrow \quad \|e\| \leq \sqrt{\frac{V(e)}{\lambda_{\min}(P)}}.
+\end{equation*}
+Combinando con la cota superior de \(V\):
+\begin{equation*}
+    \|e\| \leq \sqrt{\frac{D^2}{\epsilon \alpha \lambda_{\min}(P)}}.
+\end{equation*}
+Por lo tanto, la elipsoide atractiva es:
+\begin{equation*}
+    \mathcal{E} = \left\{ e \in \mathbb{R}^{n+1} : e^T P e \leq \frac{D^2}{\epsilon \alpha} \right\}.
+\end{equation*}
+
+
+
+
 
 \end{itemize}
 
@@ -235,164 +509,9 @@ aplique un controlador por modos deslizantes mediante el método de elipsoides a
 
 \newpage
 
-\begin{itemize}
-    \item Proponga un controlador por realimentación de estados que permita realizar el seguimiento de trayectorias por parte de la salida
 
-Se definen los errores de seguimiento y el estado integral:
 
-\begin{equation*}
-    e_1 = r - x_1, \quad e_2 = \dot{r} - x_2, \quad e_3 = \ddot{r} - x_3, \quad x_4 = \int e_1 \, dt.
-\end{equation*}
 
-Se propone la ley de control por realimentación de estados como:
 
-\begin{equation*}
-    u = -K e, \quad K = \begin{bmatrix} k_1 & k_2 & k_3 & k_i \end{bmatrix}, \quad e = \begin{bmatrix} e_1 \\ e_2 \\ e_3 \\ x_4 \end{bmatrix}.
-\end{equation*}
 
-Derivando los errores y sustituyendo la dinámica del sistema, se obtiene:
-\begin{equation*}
-    \begin{aligned}
-        \dot{e}_1 &= \dot{r}-\dot{x}_1 = e_2 - \cos(x_1+x_2+x_3) \\
-        \dot{e}_2 &=\ddot{r}-\dot{x}_2 = e_3 - \sin(x_1+x_2+x_3) \\
-        \dot{e}_3 &= \dddot{r}-\dot{x}_3 = \dddot{r} - \sin(x_1x_2x_3+t)\cos(x_1x_2x_3+t) - u \\
-        \dot{x}_4 &= e_1
-    \end{aligned}
-\end{equation*}
 
-Definiendo el vector de perturbaciones \textit{mismatched}:
-\begin{equation*}
-    f(x,t) = \begin{bmatrix}
-        -\cos(x_1+x_2+x_3) \\
-        -\sin(x_1+x_2+x_3) \\
-        \dddot{r} - \sin(x_1x_2x_3+t)\cos(x_1x_2x_3+t)
-    \end{bmatrix},
-\end{equation*}
-el sistema del error se puede escribir en forma matricial como:
-\begin{equation*}
-    \dot{e} = A e + B u + D f(x,t),
-\end{equation*}
-donde
-\begin{equation*}
-    A = \begin{bmatrix}
-        0 & 1 & 0 & 0 \\
-        0 & 0 & 1 & 0 \\
-        0 & 0 & 0 & 0 \\
-        1 & 0 & 0 & 0
-    \end{bmatrix}, \quad
-    B = \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}, \quad
-    D = \begin{bmatrix}
-        1 & 0 & 0 \\
-        0 & 1 & 0 \\
-        0 & 0 & 1 \\
-        0 & 0 & 0
-    \end{bmatrix}.
-\end{equation*}
-
-Sustituyendo la ley de control \(u = -Ke\), el sistema en lazo cerrado es:
-\begin{equation*}
-    \dot{e} = A_{lc} e + D f(x,t), \quad A_{lc} = A - BK.
-\end{equation*}
-
-Se supone que la perturbación satisface la cota:
-\begin{equation*}
-    \|f(x,t)\|_{Q_f}^2 \leq f_0 + \|x\|_{Q_x}^2,
-\end{equation*}
-con \(Q_f > 0\), \(Q_x \geq 0\) y \(f_0 \geq 0\) conocidos.
-
-Se propone la función candidata de Lyapunov:
-\begin{equation*}
-    V(e) = e^T P e, \quad P > 0.
-\end{equation*}
-
-Derivando:
-\begin{equation*}
-    \dot{V}(e) = e^T(A_{lc}^T P + P A_{lc})e + 2e^T P D f(x,t).
-\end{equation*}
-
-Aplicando la \(\Lambda\)-desigualdad:
-\begin{equation*}
-    2e^T P D f(x,t) \leq \tau_2 e^T P D Q_f^{-1} D^T P e + \frac{1}{\tau_2} f^T Q_f f,
-\end{equation*}
-con \(\tau_2 > 0\). Usando la cota quasi-Lipschitz:
-\begin{equation*}
-    \frac{1}{\tau_2} f^T Q_f f \leq \frac{f_0}{\tau_2} + \frac{1}{\tau_2} \|x\|_{Q_x}^2.
-\end{equation*}
-
-Sustituyendo en la derivada de \(V\):
-\begin{equation*}
-    \dot{V}(e) \leq e^T\left( A_{lc}^T P + P A_{lc} + \tau_2 P D Q_f^{-1} D^T P + Q_x \right)e + \frac{f_0}{\tau_2}.
-\end{equation*}
-
-Se desea que:
-\begin{equation*}
-    \dot{V}(e) \leq -\alpha V(e) + \frac{f_0}{\tau_2}, \quad \alpha > 0.
-\end{equation*}
-
-Por lo tanto, se requiere:
-\begin{equation*}
-    A_{lc}^T P + P A_{lc} + \tau_2 P D Q_f^{-1} D^T P + Q_x + \alpha P \leq 0.
-\end{equation*}
-
-Se aplican las siguientes transformaciones para formar una LMI
-\begin{enumerate}
-    \item Cambio de variable \(Q = P^{-1} > 0\) y \(F = K Q\), que elimina la bilinealidad \(PBK\).
-    \item Uso del complemento de Schur para el término \(\tau_2 P D Q_f^{-1} D^T P\).
-\end{enumerate}
-
-Con esto, la condición se escribe como la LMI:
-\begin{equation*}
-    \begin{bmatrix}
-        AQ + QA^T - F^T B^T - BF + \alpha Q + Q_x & D \\
-        D^T & -\frac{1}{\tau_2} Q_f
-    \end{bmatrix} \leq 0,
-\end{equation*}
-sujeta a:
-\begin{equation*}
-    Q > 0, \quad \tau_2 > 0, \quad \alpha > 0.
-\end{equation*}
-
-El vector de ganancias se recupera como:
-\begin{equation*}
-    K = F (Q)^{-1}.
-\end{equation*}
-
-Para verificar la elipsoide atractiva, partimos de:
-\begin{equation*}
-    \dot{V} \leq -\alpha V + \frac{f_0}{\tau_2}.
-\end{equation*}
-
-Multiplicando por \(e^{\alpha t}\):
-\begin{equation*}
-    e^{\alpha t}\dot{V} + \alpha e^{\alpha t}V \leq \frac{f_0}{\tau_2} e^{\alpha t} \quad \Rightarrow \quad \frac{d}{dt}(e^{\alpha t}V) \leq \frac{f_0}{\tau_2} e^{\alpha t}.
-\end{equation*}
-
-Integrando de \(0\) a \(t\):
-\begin{equation*}
-    e^{\alpha t}V(t) - V(0) \leq \frac{f_0}{\tau_2 \alpha}(e^{\alpha t} - 1),
-\end{equation*}
-\begin{equation*}
-    V(t) \leq V(0)e^{-\alpha t} + \frac{f_0}{\tau_2 \alpha}(1 - e^{-\alpha t}).
-\end{equation*}
-
-Tomando el límite cuando \(t \to \infty\):
-\begin{equation*}
-    \limsup_{t \to \infty} V(e(t)) \leq \frac{f_0}{\tau_2 \alpha}.
-\end{equation*}
-
-Usando la desigualdad de Rayleigh:
-\begin{equation*}
-    \lambda_{\min}(P)\|e\|^2 \leq e^T P e = V(e) \quad \Rightarrow \quad \|e\| \leq \sqrt{\frac{V(e)}{\lambda_{\min}(P)}}.
-\end{equation*}
-
-Combinando con la cota superior de \(V\):
-\begin{equation*}
-    \|e\| \leq \sqrt{\frac{f_0}{\tau_2 \alpha \lambda_{\min}(P)}}.
-\end{equation*}
-
-Por lo tanto, la elipsoide atractiva es:
-\begin{equation*}
-    \mathcal{E} = \left\{ e \in \mathbb{R}^4 : e^T P e \leq \frac{f_0}{\tau_2 \alpha} \right\}.
-\end{equation*}
-
-\end{itemize}
