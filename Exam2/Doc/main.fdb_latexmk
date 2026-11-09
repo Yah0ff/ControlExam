@@ -1,17 +1,18 @@
 # Fdb version 4
-["biber main"] 0 "main.bcf" "main.bbl" "main" 1793950741.28559 0
+["biber main"] 0 "main.bcf" "main.bbl" "main" 1793996577.93811 0
   "Referencias.bib" 0 -1 0 ""
   "main.bcf" 0 -1 0 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1793950737.36969 "d:/Documentos/GitHub/ControlExam/Exam2/Doc/main.tex" "main.pdf" "main" 1793950741.28791 0
+["pdflatex"] 1793996573.76874 "d:/Documentos/GitHub/ControlExam/Exam2/Doc/main.tex" "main.pdf" "main" 1793996577.94027 0
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecbx1095.tfm" 993061956 3228 aacd2ac2d814480e4422ad7e830fd2d4 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecbx1200.tfm" 993061958 3200 b8d69bc738e5ef3e08cefeef3109ff56 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecrm1095.tfm" 993062124 3172 eb6efaa83c6c52473a1c403f376eab0f ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecrm1200.tfm" 993062126 3152 4850ff0163852b7fab34bd55e1197f28 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecrm1440.tfm" 993062128 3168 3bd7b08ba4330af81521911744311212 ""
+  "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecti1095.tfm" 993062322 2852 cf233cde705f180d95560390f0f826e7 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/tcrm1095.tfm" 993062508 1460 8005ce585ff351dff78998923504da5e ""
   "C:/Program Files/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
   "C:/Program Files/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1233951848 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -35,6 +36,7 @@
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb" 1247596666 37166 8ab3487cbe3ab49ebce74c29ea2418db ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1247596666 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1247596667 35752 024fb6c41858982481f6968b5fc26508 ""
+  "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1247596667 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1247596667 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1247596667 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
@@ -145,14 +147,15 @@
   "C:/Users/Yahoff/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1095.pk" 1788242126 26228 655c7c19e06d2097098f0ecd8449e4cb ""
   "C:/Users/Yahoff/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1200.pk" 1788242146 28440 973e38128728efd977098404a46cc907 ""
   "C:/Users/Yahoff/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1440.pk" 1790294292 34320 5ed84a83144794c136fe67ac146e37f8 ""
+  "C:/Users/Yahoff/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecti1095.pk" 1790842413 35204 59eca53184271b339e717808a938ce40 ""
   "C:/Users/Yahoff/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk" 1790295140 12668 90114d35eb222a4beedf11726998d31c ""
   "C:/Users/Yahoff/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774472658 13323464 ab2f780685bba33b951e8f20f009a6d2 ""
-  "Tarea.tex" 1793950735 6258 fb6f5f5440768afe1c7610044477e632 ""
+  "Tarea.tex" 1793996570 11577 bbe0c4ea87853af692409c1fd0e6cc76 ""
   "d:/Documentos/GitHub/ControlExam/Exam2/Doc/main.tex" 1793861712 1608 db3431f551c1a6d162b1418917fed48e ""
-  "main.aux" 1793950740 456 3e995432416d2dc74c4ddd013b03a1c3 "pdflatex"
+  "main.aux" 1793996576 456 91e355c448c2d2ac12231115a166ff72 "pdflatex"
   "main.bbl" 0 -1 0 "biber main"
-  "main.out" 1793950739 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "main.run.xml" 1793950740 2434 686b91026855520453bf84011460d5df "pdflatex"
+  "main.out" 1793996576 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "main.run.xml" 1793996576 2434 686b91026855520453bf84011460d5df "pdflatex"
   "main.tex" 1793861712 1608 db3431f551c1a6d162b1418917fed48e ""
   (generated)
   "main.aux"
